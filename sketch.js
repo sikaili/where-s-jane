@@ -6,13 +6,16 @@ let state = -1;
 let doubleClick,ts=[];
 let mic,osc,filt;
 let locss = [];
-let cityA = [];
+let cityA = [],placeA=[];
 let cityArray=[];
-
+let placeArray=[];
+let img;
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
+  img = loadImage("assets/1.png");
 }
 function setup() {
+  noCursor();
   for(let e = 0; e < 210; e++){
     let m = split(table.getString(e,1),",");
     let str = split(table.getString(e,5),",")[0];
@@ -21,7 +24,7 @@ function setup() {
       n:split(table.getString(e,0),","),
       x:split(table.getString(e,1),","),
       y:split(table.getString(e,2),","),
-      place:split(table.getString(e,3),","),
+      place:split(table.getString(e,3),",")[0],
       city:split(table.getString(e,6),",")[0],
       date:split(table.getString(e,4),","),
       time:split(table.getString(e,5),","),
@@ -30,13 +33,14 @@ function setup() {
     }
     locss.push(point);
     let mm = point.city;
+    console.log(mm)
     cityA.indexOf(mm)===-1?cityA.push(mm):"";
+    placeA.indexOf(point.place)===-1?placeA.push(point.place):"";
   }
   console.log(cityA);
   // for(let i =0;i<cityA.length;i++){
   //   cityArray[cityA[i]] = locss.filter(obj=>obj.city===cityA[i]);
   // } 
-  console.log(cityArray);
 
 	// mic = new p5.AudioIn();
 	// mic.start();
@@ -68,8 +72,8 @@ function setup() {
 
 
   locss.map(point=>{
-    point.x = map(point.x,minx,maxx,width*0.1,width*0.9);
-    point.y = map(point.y,miny,maxy,height*0.2,height*0.9);
+    point.x = map(point.x,minx,maxx,width*0.9,width*0.1);
+    point.y = map(point.y,miny,maxy,height*0.23,height*0.9);
   })
 
 }
@@ -78,24 +82,34 @@ function changeC(){
   return color;
 }
 function draw() {
-  background(200,150);
+  // image(img, 0, 0, width, height)
   let locs = Choose(locss);
   for(let i =0;i<cityA.length;i++){
     cityArray[cityA[i]] = locs.filter(obj=>obj.city===cityA[i]);
-  } 
+  }
+  // console.log(placeArray);
+  for(let i =0;i<placeA.length;i++){
+    placeArray[placeA[i]] = locs.filter(obj=>obj.place===placeA[i]);
+  }
+  background(150,100);
+  // background(locs[locs.length-1].hour*10,150);
+  push();
+  stroke(0,0);
+  fill(50,50,100,100);
+  rect(0,height-15,mouseX,15);
+  pop();
   if(locs){
     push();
     fill(0,100);
     strokeWeight(0);
-    textSize(25);
+    textSize(20);
     // console.log(locs[locs.length-1].date);
-    text("Name:\nJane Doe ",0.1*width,0.1*height);
-    text(locs[locs.length-1].date+" "+locs[locs.length-1].time,width/2+50,height*0.8);
-    text(locs[locs.length-1].n+" facebook connections",width/2+50,height*0.8+50+random(0,2));
+    text("Name:\nJane Doe\n\nWe guess you :\nLive in :  ",0.8*width,0.1*height);
+    text(locs[locs.length-1].date+" "+locs[locs.length-1].time,width/8+50,height*0.8);
+    text(locs[locs.length-1].n+" facebook connections",width/8+50,height*0.8+50+random(0,2));
     if(mouseX>width*0.8){
       fill(150,0,0,random(0,1000))
-      text("Each time you connect,\nFacebook knows where you are",width/2+50,height*0.8+100+random(0,2));
-
+      text("Each time you connect,\nFacebook knows where you are",width/8+50,height*0.8+100+random(0,2));
     }
     pop();
   }
@@ -105,14 +119,18 @@ function draw() {
   stroke(0,80);
   for(let i = 0; i<locs.length;i++){
     vertex(locs[i].x,locs[i].y);
-
     push();
     noStroke();
+    fill(0,0,100,3);
+    ellipse(cityArray[locs[i].city][0].x,cityArray[locs[i].city][0].y,cityArray[locs[i].city].length*5);
     fill(0,0,100,50);
+
     ellipse(locs[i].x,locs[i].y,random(5,15)+locs[i].size);
-    fill(255-cityArray[locs[i].city].length*1,255-cityArray[locs[i].city].length*6,0,20*cityArray[locs[i].city].length);
+    fill(255-cityArray[locs[i].city].length*1,255-cityArray[locs[i].city].length*5,0,20*cityArray[locs[i].city].length);
     textSize(cityArray[locs[i].city].length+15+Math.random()/2);
     text(locs[i].city+" ",cityArray[locs[i].city][0].x-50,cityArray[locs[i].city][0].y-cityArray[locs[i].city].length*1);
+    // text(locs[i].place+" ",placeArray[locs[i].place][0].x-50,placeArray[locs[i].place][0].y-placeArray[locs[i].place].length*1);
+
     pop();
     ellipse(locs[i].x,locs[i].y,random(10,15));
     // curveTightness(3);
