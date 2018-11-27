@@ -15,25 +15,27 @@ function setup() {
     let m = split(table.getString(e,1),",")
     console.log(m);
     let point = {
+      n:split(table.getString(e,0),","),
       x:split(table.getString(e,1),","),
       y:split(table.getString(e,2),","),
-      n:split(table.getString(e,0),","),
+      place:split(table.getString(e,3),","),
       date:split(table.getString(e,4),","),
-      note:split(table.getString(e,5),","),
+      time:split(table.getString(e,5),","),
+
       size:Math.random()*40
     }
     
     locss.push(point);
   }
-	mic = new p5.AudioIn();
-	mic.start();
+	// mic = new p5.AudioIn();
+	// mic.start();
   createCanvas(windowWidth, windowHeight);
-  osc = new p5.Oscillator();
-  osc.disconnect();
-  osc.connect(filt);
-  osc.setType('sawtooth');
-  osc.start();
-  osc.freq(0);
+  // osc = new p5.Oscillator();
+  // osc.disconnect();
+  // osc.connect(filt);
+  // osc.setType('sawtooth');
+  // osc.start();
+  // osc.freq(0);
   // noCursor();
   let minx = Infinity;
   let maxx = -Infinity;
@@ -60,18 +62,25 @@ function setup() {
   })
 
 }
-
-
+function changeC(){
+  let color = new color(random(255),random(255),random(255),50);
+  return color;
+}
 function draw() {
   let locs = Choose(locss);
   if(locs){
     push();
     fill(0,200);
     strokeWeight(0);
-    textSize(25);
-    console.log(locs[locs.length-1].date);
+    textSize(30);
+    // console.log(locs[locs.length-1].date);
     text(locs[locs.length-1].date,width/2,height*0.8);
-    text(locs[locs.length-1].n+" connections",width/2,height*0.8+50);
+    text(locs[locs.length-1].n+" facebook connections",width/2,height*0.8+50+random(0,2));
+    if(mouseX>width*0.8){
+      fill(150,0,0,random(0,1000))
+      text("Each time you connect,\nFacebook knows where you are",width/2,height*0.8+100+random(0,2));
+
+    }
     pop();
   }
   background(200,150);
@@ -83,13 +92,23 @@ function draw() {
     push();
     noStroke();
     textSize(15+Math.random()/2);
-    fill(100,0,0,50);
-    ellipse(locs[i].x,locs[i].y,random(40,43)+locs[i].size);
-    text(locs[i].date,locs[i].x,locs[i].y);
+    fill(0,0,100,50);
+    ellipse(locs[i].x,locs[i].y,random(5,15)+locs[i].size);
+    fill(255,255,0,80);
+    text(locs[i].time,locs[i].x,locs[i].y);
     pop();
-    ellipse(locs[i].x,locs[i].y,random(5,10));
+    ellipse(locs[i].x,locs[i].y,random(10,15));
     vertex(locs[i].x,locs[i].y);
+    // curveTightness(3);
   }
+  push()
+  fill(255,0,0,100);
+  ellipse(locs[locs.length-1].x,locs[locs.length-1].y,50-random(25));
+  textSize(30);
+  fill(0,0,0,150);
+  stroke(0,0);
+  text(locs[locs.length-1].place,locs[locs.length-1].x+30,locs[locs.length-1].y-60);
+  pop();
   endShape();
 }
 
