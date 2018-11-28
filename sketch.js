@@ -35,9 +35,11 @@ function setup() {
     }
     locss.push(point);
     let mm = point.city;
+    let nn = point.place;
     console.log(mm)
     cityA.indexOf(mm)===-1?cityA.push(mm):"";
-    placeA.indexOf(point.place)===-1?placeA.push(point.place):"";
+    placeA.indexOf(nn)===-1?placeA.push(nn):"";
+    console.log(placeA);
   }
   console.log(cityA);
 
@@ -79,20 +81,22 @@ function draw() {
     cityArray[i] = locs.filter(obj=>obj.city===cityA[i]);
   }
   for(let i =0;i<placeA.length;i++){
-    placeArray[placeA[i]] = locs.filter(obj=>obj.place===placeA[i]);
+    placeArray[i] = locs.filter(obj=>obj.place===placeA[i]);
   }
   let m = [...cityArray];
   m = m.sort((a,b)=>(b.length-a.length));
   // console.log(m==)
+
+  let n = [...placeArray];
+  n = n.sort((a,b)=>(b.length-a.length));
+
   background(150,150,180,100);
 
-// general info text
-
-  if(locs){
 
 // info text Right
+  if(locs){
     const top = 35;
-    const left = width-15;
+    const left = width-30;
     push();
     strokeWeight(0);
     textSize(15);
@@ -149,6 +153,26 @@ function draw() {
         text(m[i][0].city,15,30+i*20);
       }
     }
+//  left place list
+  if(n.length>10){
+    for(let i =0;i<n.length;i++){
+      if(!n[i][0]||i>5){
+        continue
+      }
+      // console.log(n[i][0].city)
+      if(locs[locs.length-1].place==n[i][0].place){
+        fill(150,0,0);
+        stroke(150,0,0);
+
+      }
+      else{
+        fill(0,0,180,40);
+        stroke(0,0,180,40);
+
+      }
+      text(n[i][0].place,15,height*0.85-35*4+i*20);
+    }
+}
   }
 // LINES, CIRCLES
   beginShape();
@@ -183,7 +207,7 @@ function draw() {
     pop();
     ellipse(locs[i].x,locs[i].y,random(10,15));
   }
-  console.log(cityArray);
+  // console.log(cityArray);
   push()
   fill(255,0,0,100);
   textAlign(CENTER);
@@ -198,17 +222,30 @@ function draw() {
   let vmin;
   width>height?vmin=height:vmin=width;
   // bar de navigation
-  push();
-  stroke(0,0);
-  fill(30,50,150,100);
-  rect(0,height-15,mouseX,15);
-  pop();
+  if(height>width){
+    push();
+    stroke(0,0);
+    fill(30,50,150,100);
+    rect(width-15,mouseY,15,height-mouseY);
+    pop();
+  }
+  else{
+    push();
+    stroke(0,0);
+    fill(30,50,150,100);
+    rect(0,height-15,mouseX,15);
+    pop();
+  }
 }
 
 
 
 function Choose(array){
+
   let n = Math.floor(map(mouseX,0,width,0,array.length))+1;
+  if(height>width){
+    n = Math.floor(map(height-mouseY,0,height,0,array.length))+1;
+  }
   return array.slice(0,n);
 }
 
