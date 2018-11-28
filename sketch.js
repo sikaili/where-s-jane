@@ -14,9 +14,6 @@ function preload() {
   table = loadTable("assets/e5.csv","csv","header");
   img = loadImage("assets/1.png");
   font = loadFont('assets/SpaceMono-Regular.ttf');
-  // font = loadFont('assets/Inconsolata-Regular.ttf');
-
-  
 }
 function setup() {
   textFont(font);
@@ -43,12 +40,7 @@ function setup() {
     placeA.indexOf(point.place)===-1?placeA.push(point.place):"";
   }
   console.log(cityA);
-  // for(let i =0;i<cityA.length;i++){
-  //   cityArray[cityA[i]] = locss.filter(obj=>obj.city===cityA[i]);
-  // } 
 
-	// mic = new p5.AudioIn();
-	// mic.start();
   createCanvas(windowWidth, windowHeight);
   // osc = new p5.Oscillator();
   // osc.disconnect();
@@ -99,10 +91,12 @@ function draw() {
 
   // console.log(JSON.stringfy(cityArray));
 
-  // let m = [];
-  // m = cityArray.sort((a,b)=>(a.length-b.length));
-  // console.log(m);
+  let m = [];
+  m = cityArray.sort((a,b)=>(b.length-a.length));
+
   background(150,150,180,100);
+
+
   // bar de navigation
   push();
   stroke(0,0);
@@ -110,6 +104,7 @@ function draw() {
   rect(0,height-15,mouseX,15);
   pop();
   // general info text
+
   if(locs){
     push();
     fill(0,100);
@@ -124,26 +119,47 @@ function draw() {
       text("Each time you connect,\nFacebook knows where you are",width/8+50,height*0.8+100+random(0,2));
     }
     pop();
+    if(m.length>10){
+      for(let i =0;i<m.length;i++){
+        if(!m[i][0]||i>20){
+          continue
+        }
+
+        // console.log(m[i][0].city)
+        if(locs[locs.length-1].city==m[i][0].city){
+          fill(255,0,0);
+          // let bounds = font.textBounds("memememe",0,0,fontsize)；
+          
+          // rect(15,30+i*18,bounds.x,25);
+        }
+        else{
+          fill(255);
+        }
+        text(m[i][0].city,15,30+i*20);
+      }
+    }
   }
   beginShape();
   fill(0,0);
   strokeWeight(2-Math.random());
-  stroke(0,80);
+  stroke(255,80);
   for(let i = 0; i<locs.length;i++){
     vertex(locs[i].x,locs[i].y);
     let d = cityA.indexOf(locs[i].city);
     // console.log(d);
     push();
     noStroke();
-    fill(0,0,100,3);
-    ellipse(cityArray[d][0].x,cityArray[d][0].y,cityArray[d].length*5);
     fill(0,0,100,50);
     ellipse(locs[i].x,locs[i].y,random(5,15)+locs[i].size);
     fill(255-cityArray[d].length*1,255-cityArray[d].length*5,0,20*cityArray[d].length);
     textSize(15+Math.random()/2);
     textAlign(CENTER);
     if(cityArray[d].length>2){
-    text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y-cityArray[d].length*1);
+      fill(0,0,100,3);
+      ellipse(cityArray[d][0].x,cityArray[d][0].y,constrain(cityArray[d].length*8,0,300)+random(-10,10)*cityArray[d].length/2);
+      fill(255-cityArray[d].length*1,255-cityArray[d].length*5,0,8);
+      textSize(constrain(cityArray[d].length*1.5,15,45));
+      text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y-cityArray[d].length);
     }
     // text(locs[i].place+" ",placeArray[locs[i].place][0].x-50,placeArray[locs[i].place][0].y-placeArray[locs[i].place].length*1);
     pop();
@@ -158,7 +174,8 @@ function draw() {
   fill(0,0,0,150);
   stroke(0,0);
   textAlign(CENTER);
-  text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y-30);
+  textSize(25);
+  text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y+30);
   pop();
   endShape();
   let vmin;
