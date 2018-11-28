@@ -16,7 +16,7 @@ function preload() {
   font = loadFont('assets/SpaceMono-Regular.ttf');
 }
 function setup() {
-  textFont(font);
+  // textFont(font);
   noCursor();
   for(let e = 0; e < 210; e++){
     let m = split(table.getString(e,1),",");
@@ -63,15 +63,54 @@ function setup() {
     point.x<minx?minx=point.x:""
   })
 // MAP TO SCREEN
-  locss.map(point=>{
-    point.x = map(point.x,minx,maxx,width*0.9-50,width*0.1+100);
-    point.y = map(point.y,miny,maxy,height*0.23,height*0.9);
-  })
+  if(height>width){
+    locss.map(point=>{
+      point.x = map(point.x,minx,maxx,width*0.9-50,width*0.1+100);
+      point.y = map(point.y,miny,maxy,height*0.3,height*0.91);
+    })   
+  }
+  else{
+    locss.map(point=>{
+      point.x = map(point.x,minx,maxx,width*0.9-100,width*0.1+100);
+      point.y = map(point.y,miny,maxy,height*0.23+50,height*0.9-50);
+    })
+  }
 
 }
 function changeC(){
   let color = new color(random(255),random(255),random(255),50);
   return color;
+}
+
+function sizeT(n){
+  let tSmall = 15;
+  let tMid = 25;
+  let tInt = 35;
+  let scl = 1.5;
+  if(n===0){
+    if(height>width){
+      return tSmall*scl;
+    }
+    return tSmall;
+  }
+  if(n===1){
+    if(height>width){
+      return tMid*scl;
+    }
+    return tMid;
+  }
+  if(n===-1){
+    if(height>width){
+      return tInt*scl;
+    }
+    return tInt;
+  }
+  if(n===-2){
+    if(height>width){
+      return tInt/1.5;
+    }
+    return tInt/1.5;
+  }
 }
 function draw() {
 
@@ -95,48 +134,48 @@ function draw() {
 
 // info text Right
   if(locs){
-    const top = 35;
-    const left = width-30;
+    const top = sizeT(-1);
+    const left = width-sizeT(-1);
     push();
     strokeWeight(0);
-    textSize(15);
+    textSize(sizeT(0));
     textAlign(RIGHT);
     console.log()
     if(locs.length<50){
       console.log(m);
       fill(0,0,150,80);
       text("Data of Jane Joe",left,top+random(1,2));
-      text("From 03/07/18 to 23/07/18",left,top+35+random(1,2));
-      text("We believe you live in:",left,top+70+random(1,2));
+      text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+random(1,2));
+      text("We believe you live in:",left,top+sizeT(-1)*2+random(1,2));
       fill(150,0,0,100);
-      text(cityA[Math.floor(random(5,20))],left,top+105+random(1,2));
+      text(cityA[Math.floor(random(5,20))],left,top+sizeT(-1)*3+random(1,2));
     }
     else{
       fill(0,0,150,80);
       text("Data of Jane Joe",left,top+random(1,2));
-      text("From 03/07/18 to 23/07/18",left,top+35+random(1,2));
-      text("We believe you live in:",left,top+70+random(1,2));
+      text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+random(1,2));
+      text("We believe you live in:",left,top+sizeT(-1)*2+random(1,2));
       fill(150,0,0,100);
-      text(m[0][0].city+" "+m[0][0].place,left,top+105+random(1,2));
-      text(m[1][0].place,left,top+140+random(1,2));
+      text(m[0][0].city+" "+m[0][0].place,left,top+sizeT(-1)*3+random(1,2));
+      text(m[1][0].place,left,top+sizeT(-1)*4+random(1,2));
 
     }
 // date time Left
     textAlign(LEFT);
     fill(150,0,0,random(0,1000));
     text(locs[locs.length-1].date+" "+locs[locs.length-1].time,15,height*0.85);
-    text("Total facebook connections:"+locs[locs.length-1].n,15,height*0.85+35+random(0,2));
+    text("Total facebook connections:"+locs[locs.length-1].n,15,height*0.85+sizeT(-1)+random(0,2));
 
 // provocative sentences
     if(mouseX>width*0.8){
       fill(150,0,0,random(0,1000));
-      text("Each time you connect,\nFacebook knows where you are",15,height*0.85+70+random(0,2));
+      text("Each time you connect,\nFacebook knows where you are",15,height*0.85+sizeT(-1)*2+random(0,2));
     }
     pop();
 // Left City List
     if(m.length>10){
       for(let i =0;i<m.length;i++){
-        if(!m[i][0]||i>20){
+        if(!m[i][0]||i>10){
           continue
         }
         // console.log(m[i][0].city)
@@ -150,7 +189,8 @@ function draw() {
           stroke(255,40);
 
         }
-        text(m[i][0].city,15,30+i*20);
+        // textSize(15);
+        text(m[i][0].city,15,30+i*sizeT(-2));
       }
     }
 //  left place list
@@ -166,11 +206,11 @@ function draw() {
 
       }
       else{
-        fill(0,0,180,40);
-        stroke(0,0,180,40);
+        fill(0,0,180,20);
+        stroke(0,0,180,20);
 
       }
-      text(n[i][0].place,15,height*0.85-35*4+i*20);
+      text(n[i][0].place,15,height*0.85-sizeT(-1)*4+i*sizeT(-2));
     }
 }
   }
@@ -179,27 +219,30 @@ function draw() {
   fill(0,0);
   strokeWeight(2-Math.random());
   stroke(255,80);
+  let x = 0;
+  let y = 0;
   for(let i = 0; i<locs.length;i++){
     vertex(locs[i].x,locs[i].y);
     curveTightness(random(1.5,2));
     // get number of this city
     let d = cityA.indexOf(locs[i].city);
-
     // draw parcours points
     push();
     noStroke();
     fill(0,0,100,50);
     ellipse(locs[i].x,locs[i].y,random(10,20)+locs[i].size);
     fill(255-cityArray[d].length*1,255-cityArray[d].length*5,0,20*cityArray[d].length);
-    textSize(15+Math.random()/2);
+    textSize(sizeT(0)+Math.random()/2);
     textAlign(CENTER);
     // Draw frequented cities
     if(cityArray[d].length>4){
       fill(100,0,0,10);
+      let r = constrain(cityArray[d].length*8,0,300)+random(-10,10)*cityArray[d].length/1.3 ;
       if(cityArray[d].length>30){
         fill(100,0,0,2);
+        r = constrain(cityArray[d].length*8,0,300)+random(-10,10)*cityArray[d].length/4;
       }
-      ellipse(cityArray[d][0].x,cityArray[d][0].y,constrain(cityArray[d].length*8,0,300)+random(-10,10)*cityArray[d].length/2);
+      ellipse(cityArray[d][0].x,cityArray[d][0].y,r);
       fill(255-cityArray[d].length*1,255-cityArray[d].length*5,0,20);
       textSize(constrain(cityArray[d].length*1.8,10,45));
       cityArray[d][0].y>height/2?text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y-cityArray[d].length):text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y+cityArray[d].length*4);
@@ -214,8 +257,8 @@ function draw() {
   ellipse(locs[locs.length-1].x,locs[locs.length-1].y,50-random(25));
   fill(130,10,10,180);
   stroke(0,0);
-  textSize(25);
-  text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y+50);
+  textSize(sizeT(0)*1.2);
+  text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y+sizeT(-1)*1.5);
 
   pop();
   endShape();
