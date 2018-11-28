@@ -9,12 +9,17 @@ let locss = [];
 let cityA = [],placeA=[];
 let cityArray=[];
 let placeArray=[];
-let img;
+let img,font;
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
   img = loadImage("assets/1.png");
+  font = loadFont('assets/SpaceMono-Regular.ttf');
+  // font = loadFont('assets/Inconsolata-Regular.ttf');
+
+  
 }
 function setup() {
+  textFont(font);
   noCursor();
   for(let e = 0; e < 210; e++){
     let m = split(table.getString(e,1),",");
@@ -82,29 +87,36 @@ function changeC(){
   return color;
 }
 function draw() {
-  // image(img, 0, 0, width, height)
+
+  // splice array, create cityArray&placeArray
   let locs = Choose(locss);
   for(let i =0;i<cityA.length;i++){
-    cityArray[cityA[i]] = locs.filter(obj=>obj.city===cityA[i]);
+    cityArray[i] = locs.filter(obj=>obj.city===cityA[i]);
   }
-  // console.log(placeArray);
   for(let i =0;i<placeA.length;i++){
     placeArray[placeA[i]] = locs.filter(obj=>obj.place===placeA[i]);
   }
-  background(150,100);
-  // background(locs[locs.length-1].hour*10,150);
+
+  // console.log(JSON.stringfy(cityArray));
+
+  // let m = [];
+  // m = cityArray.sort((a,b)=>(a.length-b.length));
+  // console.log(m);
+  background(150,150,180,100);
+  // bar de navigation
   push();
   stroke(0,0);
   fill(50,50,100,100);
   rect(0,height-15,mouseX,15);
   pop();
+  // general info text
   if(locs){
     push();
     fill(0,100);
     strokeWeight(0);
     textSize(20);
     // console.log(locs[locs.length-1].date);
-    text("Name:\nJane Doe\n\nWe guess you :\nLive in :  ",0.8*width,0.1*height);
+    text("Data of Jean Joe",0.8*width,0.1*height);
     text(locs[locs.length-1].date+" "+locs[locs.length-1].time,width/8+50,height*0.8);
     text(locs[locs.length-1].n+" facebook connections",width/8+50,height*0.8+50+random(0,2));
     if(mouseX>width*0.8){
@@ -119,18 +131,21 @@ function draw() {
   stroke(0,80);
   for(let i = 0; i<locs.length;i++){
     vertex(locs[i].x,locs[i].y);
+    let d = cityA.indexOf(locs[i].city);
+    // console.log(d);
     push();
     noStroke();
     fill(0,0,100,3);
-    ellipse(cityArray[locs[i].city][0].x,cityArray[locs[i].city][0].y,cityArray[locs[i].city].length*5);
+    ellipse(cityArray[d][0].x,cityArray[d][0].y,cityArray[d].length*5);
     fill(0,0,100,50);
-
     ellipse(locs[i].x,locs[i].y,random(5,15)+locs[i].size);
-    fill(255-cityArray[locs[i].city].length*1,255-cityArray[locs[i].city].length*5,0,20*cityArray[locs[i].city].length);
-    textSize(cityArray[locs[i].city].length+15+Math.random()/2);
-    text(locs[i].city+" ",cityArray[locs[i].city][0].x-50,cityArray[locs[i].city][0].y-cityArray[locs[i].city].length*1);
+    fill(255-cityArray[d].length*1,255-cityArray[d].length*5,0,20*cityArray[d].length);
+    textSize(15+Math.random()/2);
+    textAlign(CENTER);
+    if(cityArray[d].length>2){
+    text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y-cityArray[d].length*1);
+    }
     // text(locs[i].place+" ",placeArray[locs[i].place][0].x-50,placeArray[locs[i].place][0].y-placeArray[locs[i].place].length*1);
-
     pop();
     ellipse(locs[i].x,locs[i].y,random(10,15));
     // curveTightness(3);
@@ -140,10 +155,10 @@ function draw() {
   push()
   fill(255,0,0,100);
   ellipse(locs[locs.length-1].x,locs[locs.length-1].y,50-random(25));
-  // textSize(30);
   fill(0,0,0,150);
   stroke(0,0);
-  text(locs[locs.length-1].place,locs[locs.length-1].x-30,locs[locs.length-1].y-30);
+  textAlign(CENTER);
+  text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y-30);
   pop();
   endShape();
   let vmin;
