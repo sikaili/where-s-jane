@@ -60,16 +60,9 @@ function setup() {
     point.y<miny?miny=point.y:""
     point.x<minx?minx=point.x:""
   })
-  console.log(minx);
-  console.log(miny);
-  console.log(maxx);
-  console.log(maxy);
-
-
-
-
+// MAP TO SCREEN
   locss.map(point=>{
-    point.x = map(point.x,minx,maxx,width*0.9,width*0.1);
+    point.x = map(point.x,minx,maxx,width*0.9,width*0.1+50);
     point.y = map(point.y,miny,maxy,height*0.23,height*0.9);
   })
 
@@ -88,35 +81,44 @@ function draw() {
   for(let i =0;i<placeA.length;i++){
     placeArray[placeA[i]] = locs.filter(obj=>obj.place===placeA[i]);
   }
-
-  // console.log(JSON.stringfy(cityArray));
-
   let m = [];
   m = cityArray.sort((a,b)=>(b.length-a.length));
-
   background(150,150,180,100);
-
-
   // bar de navigation
   push();
   stroke(0,0);
-  fill(50,50,100,100);
+  fill(150,50,50,100);
   rect(0,height-15,mouseX,15);
   pop();
   // general info text
 
   if(locs){
+
+    // info text Right
     push();
-    fill(0,100);
+    fill(150,0,0,100);
     strokeWeight(0);
-    textSize(20);
-    // console.log(locs[locs.length-1].date);
-    text("Data of Jean Joe",0.8*width,0.1*height);
-    text(locs[locs.length-1].date+" "+locs[locs.length-1].time,width/8+50,height*0.8);
-    text(locs[locs.length-1].n+" facebook connections",width/8+50,height*0.8+50+random(0,2));
+    textSize(15);
+    textAlign(RIGHT);
+    console.log()
+    if(locs.length<100){
+      console.log(m);
+      text("Data of Jane Joe\n\nFrom 03/07/18 to 23/07/18\n\nWe believe you live in:\n\n"+cityA[Math.floor(random(5,20))],0.95*width,0.1*height);
+    }
+    else{
+      text("Data of Jane Joe\n\nFrom 03/07/18 to 23/07/18\n\nWe believe you live in:\n\n"+m[0][0].city+" "+m[0][0].place+"\n\n"+m[1][0].place,0.95*width,0.1*height);
+
+    }
+
+    // date time Left
+    textAlign(LEFT);
+
+    fill(150,0,0,random(0,1000));
+    text(locs[locs.length-1].date+" "+locs[locs.length-1].time,width/20+5,height*0.85);
+    text("Total facebook connections:"+locs[locs.length-1].n,width/20+5,height*0.85+50+random(0,2));
     if(mouseX>width*0.8){
-      fill(150,0,0,random(0,1000))
-      text("Each time you connect,\nFacebook knows where you are",width/8+50,height*0.8+100+random(0,2));
+      fill(150,0,0,random(0,1000));
+      text("Each time you connect,\nFacebook knows where you are",width/20+5,height*0.85+100+random(0,2));
     }
     pop();
     if(m.length>10){
@@ -127,21 +129,23 @@ function draw() {
 
         // console.log(m[i][0].city)
         if(locs[locs.length-1].city==m[i][0].city){
-          fill(255,0,0);
-          // let bounds = font.textBounds("memememe",0,0,fontsize)；
-          
-          // rect(15,30+i*18,bounds.x,25);
+          fill(150,0,0);
+          stroke(150,0,0);
+
         }
         else{
-          fill(255);
+          fill(255,40);
+          stroke(255,40);
+
         }
         text(m[i][0].city,15,30+i*20);
       }
     }
   }
+  // LINES, CIRCLES
   beginShape();
   fill(0,0);
-  strokeWeight(2-Math.random());
+  strokeWeight(3-Math.random()*2);
   stroke(255,80);
   for(let i = 0; i<locs.length;i++){
     vertex(locs[i].x,locs[i].y);
@@ -171,11 +175,11 @@ function draw() {
   push()
   fill(255,0,0,100);
   ellipse(locs[locs.length-1].x,locs[locs.length-1].y,50-random(25));
-  fill(0,0,0,150);
+  fill(100,0,0,150);
   stroke(0,0);
   textAlign(CENTER);
   textSize(25);
-  text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y+30);
+  text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y+50);
   pop();
   endShape();
   let vmin;
