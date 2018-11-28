@@ -10,12 +10,14 @@ let cityA = [],placeA=[];
 let cityArray=[];
 let placeArray=[];
 let img,font;
+let mouseP = [];
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
   img = loadImage("assets/1.png");
   font = loadFont('assets/SpaceMono-Regular.ttf');
 }
 function setup() {
+
   // textFont(font);
   noCursor();
   for(let e = 0; e < 210; e++){
@@ -36,10 +38,10 @@ function setup() {
     locss.push(point);
     let mm = point.city;
     let nn = point.place;
-    console.log(mm)
+    // console.log(mm)
     cityA.indexOf(mm)===-1?cityA.push(mm):"";
     placeA.indexOf(nn)===-1?placeA.push(nn):"";
-    console.log(placeA);
+    // console.log(placeA);
   }
   console.log(cityA);
 
@@ -75,7 +77,8 @@ function setup() {
       point.y = map(point.y,miny,maxy,height*0.23+50,height*0.9-50);
     })
   }
-
+  mouseY = height;
+  mouseX = 0;
 }
 function changeC(){
   let color = new color(random(255),random(255),random(255),50);
@@ -84,7 +87,7 @@ function changeC(){
 
 function sizeT(n){
   let tSmall = 15;
-  let tMid = 25;
+  let tMid = 30;
   let tInt = 35;
   let scl = 1.5;
   if(n===0){
@@ -129,7 +132,8 @@ function draw() {
   let n = [...placeArray];
   n = n.sort((a,b)=>(b.length-a.length));
 
-  background(150,150,180,100);
+  // background(150,160,220,100);
+  background(backgroundColor);
 
 
 // info text Right
@@ -142,7 +146,7 @@ function draw() {
     textAlign(RIGHT);
     console.log()
     if(locs.length<50){
-      console.log(m);
+      // console.log(m);
       fill(0,0,150,80);
       text("Data of Jane Joe",left,top+random(1,2));
       text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+random(1,2));
@@ -180,13 +184,13 @@ function draw() {
         }
         // console.log(m[i][0].city)
         if(locs[locs.length-1].city==m[i][0].city){
-          fill(150,0,0);
-          stroke(150,0,0);
+          fill(100,0,0,150);
+          stroke(150,0,0,150);
 
         }
         else{
-          fill(255,40);
-          stroke(255,40);
+          fill(0,0,180,20);
+          stroke(0,0,180,20);
 
         }
         // textSize(15);
@@ -202,7 +206,7 @@ function draw() {
       // console.log(n[i][0].city)
       if(locs[locs.length-1].place==n[i][0].place){
         fill(150,0,0);
-        stroke(150,0,0);
+        stroke(150,0,0,30);
 
       }
       else{
@@ -217,8 +221,9 @@ function draw() {
 // LINES, CIRCLES
   beginShape();
   fill(0,0);
-  strokeWeight(2-Math.random());
-  stroke(255,80);
+  strokeWeight(2.5-Math.random()*2);
+    // color stroke
+  stroke(200,200-random(0,200),20,80);
   let x = 0;
   let y = 0;
   for(let i = 0; i<locs.length;i++){
@@ -229,7 +234,8 @@ function draw() {
     // draw parcours points
     push();
     noStroke();
-    fill(0,0,100,50);
+    // color blue
+    fill(0,0,random(110,120),50);
     ellipse(locs[i].x,locs[i].y,random(10,20)+locs[i].size);
     fill(255-cityArray[d].length*1,255-cityArray[d].length*5,0,20*cityArray[d].length);
     textSize(sizeT(0)+Math.random()/2);
@@ -243,12 +249,15 @@ function draw() {
         r = constrain(cityArray[d].length*8,0,300)+random(-10,10)*cityArray[d].length/4;
       }
       ellipse(cityArray[d][0].x,cityArray[d][0].y,r);
-      fill(255-cityArray[d].length*1,255-cityArray[d].length*5,0,20);
+      fill(255-cityArray[d].length*1,255-cityArray[d].length*5,20,50);
       textSize(constrain(cityArray[d].length*1.8,10,45));
-      cityArray[d][0].y>height/2?text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y-cityArray[d].length):text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y+cityArray[d].length*4);
+      cityArray[d][0].y>height/2?text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y-cityArray[d].length):text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y+cityArray[d].length*4+Math.random()*2);
     }
     pop();
+    push();
+    stroke(50,0,random(100,255),80);
     ellipse(locs[i].x,locs[i].y,random(10,15));
+    pop();
   }
   // console.log(cityArray);
   push()
@@ -273,6 +282,7 @@ function draw() {
     pop();
   }
   else{
+    // let m = mouseP.length/1000*width;
     push();
     stroke(0,0);
     fill(30,50,150,100);
@@ -284,10 +294,16 @@ function draw() {
 
 
 function Choose(array){
+  
+  // if(pmouseX>1||pmouseY>1){
+  //   let m = 1;
+  //   mouseP.push(m);
+  // }
+  // let n = Math.floor(map(mouseP.length,0,1000,0,array.length))+1
 
-  let n = Math.floor(map(mouseX,0,width,0,array.length))+1;
+  let n = Math.floor(constrain(map(mouseX,0,width,0,array.length),0,array.length))+1;
   if(height>width){
-    n = Math.floor(map(height-mouseY,0,height,0,array.length))+1;
+    n = Math.floor(constrain(map(height-mouseY,0,height,0,array.length),0,array.length))+1;
   }
   return array.slice(0,n);
 }
