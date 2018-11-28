@@ -13,12 +13,11 @@ let img,font;
 let mouseP = [];
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
-  img = loadImage("assets/1.png");
   font = loadFont('assets/SpaceMono-Regular.ttf');
 }
 function setup() {
 
-  // textFont(font);
+  textFont(font);
   noCursor();
   for(let e = 0; e < 210; e++){
     let m = split(table.getString(e,1),",");
@@ -88,8 +87,8 @@ function changeC(){
 function sizeT(n){
   let tSmall = 15;
   let tMid = 30;
-  let tInt = 35;
-  let scl = 1.5;
+  let tInt = 40;
+  let scl = 1.2;
   if(n===0){
     if(height>width){
       return tSmall*scl;
@@ -138,45 +137,70 @@ function draw() {
 
 // info text Right
   if(locs){
-    const top = sizeT(-1);
-    const left = width-sizeT(-1);
+    const top = sizeT(-1)*1.5;
+    const left = width-sizeT(-1)*0.7;
     push();
     strokeWeight(0);
-    textSize(sizeT(0));
     textAlign(RIGHT);
     console.log()
     if(locs.length<50){
       // console.log(m);
+      textSize(sizeT(1)*1.5);
       fill(0,0,150,80);
       text("Data of Jane Joe",left,top+random(1,2));
+      textSize(sizeT(0)*1.5);
       text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+random(1,2));
+      textSize(sizeT(1));
+
       text("We believe you live in:",left,top+sizeT(-1)*2+random(1,2));
       fill(150,0,0,100);
+      textSize(sizeT(0)*1.5);
+
       text(cityA[Math.floor(random(5,20))],left,top+sizeT(-1)*3+random(1,2));
     }
     else{
+      textSize(sizeT(1)*1.5);
+
       fill(0,0,150,80);
+
       text("Data of Jane Joe",left,top+random(1,2));
+      textSize(sizeT(0)*1.5);
+      fill(150,0,0,100);
       text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+random(1,2));
+      textSize(sizeT(1));
+      fill(0,0,150,80);
+
       text("We believe you live in:",left,top+sizeT(-1)*2+random(1,2));
       fill(150,0,0,100);
-      text(m[0][0].city+" "+m[0][0].place,left,top+sizeT(-1)*3+random(1,2));
-      text(m[1][0].place,left,top+sizeT(-1)*4+random(1,2));
+      textSize(sizeT(0)*1.5);
+
+      text(m[0][0].place,left,top+sizeT(-1)*3+random(1,2));
+      textSize(sizeT(1));
+      fill(0,0,150,80);
+
+      text("Your secondary residence is:",left,top+sizeT(-1)*4+random(1,2));
+      textSize(sizeT(0)*1.5);
+
+      fill(150,0,0,100);
+      text(m[1][0].place,left,top+sizeT(-1)*5+random(1,2));
 
     }
 // date time Left
     textAlign(LEFT);
     fill(150,0,0,random(0,1000));
-    text(locs[locs.length-1].date+" "+locs[locs.length-1].time,15,height*0.85);
-    text("Total facebook connections:"+locs[locs.length-1].n,15,height*0.85+sizeT(-1)+random(0,2));
+    textSize(sizeT(1)*1.4)
+    text(locs[locs.length-1].date+"\n"+locs[locs.length-1].time,15,height*0.85);
+    textSize(sizeT(0));
+    text("Total facebook connections:"+locs[locs.length-1].n,15,height*0.85+sizeT(-1)*2.3+random(0,2));
 
 // provocative sentences
     if(mouseX>width*0.8){
       fill(150,0,0,random(0,1000));
-      text("Each time you connect,\nFacebook knows where you are",15,height*0.85+sizeT(-1)*2+random(0,2));
+      text("Each time you connect,\nFacebook knows where you are",15,height*0.85+sizeT(-1)*3+random(0,2));
     }
     pop();
 // Left City List
+
     if(m.length>10){
       for(let i =0;i<m.length;i++){
         if(!m[i][0]||i>10){
@@ -184,16 +208,18 @@ function draw() {
         }
         // console.log(m[i][0].city)
         if(locs[locs.length-1].city==m[i][0].city){
-          fill(100,0,0,150);
-          stroke(150,0,0,150);
-
+          fill(cityHighlight);
+          stroke(cityHighlight);
         }
         else{
-          fill(0,0,180,20);
-          stroke(0,0,180,20);
+          fill(city);
+          stroke(city);
 
         }
-        // textSize(15);
+        textSize(sizeT(0)*1.2);
+        if(height>width){
+          textSize(10);
+        }
         text(m[i][0].city,15,30+i*sizeT(-2));
       }
     }
@@ -205,16 +231,16 @@ function draw() {
       }
       // console.log(n[i][0].city)
       if(locs[locs.length-1].place==n[i][0].place){
-        fill(150,0,0);
-        stroke(150,0,0,30);
+        fill(cityHighlight);
+        stroke(cityHighlight);
 
       }
       else{
-        fill(0,0,180,20);
-        stroke(0,0,180,20);
+        fill(city);
+        stroke(city);
 
       }
-      text(n[i][0].place,15,height*0.85-sizeT(-1)*4+i*sizeT(-2));
+      text(n[i][0].place,15,height*0.85-sizeT(-1)*5+i*sizeT(-2));
     }
 }
   }
@@ -223,12 +249,12 @@ function draw() {
   fill(0,0);
   strokeWeight(2.5-Math.random()*2);
     // color stroke
-  stroke(200,200-random(0,200),20,80);
+  stroke(parcoursStroke[0],parcoursStroke[1]-random(0,200),parcoursStroke[2],parcoursStroke[3]);
   let x = 0;
   let y = 0;
   for(let i = 0; i<locs.length;i++){
     vertex(locs[i].x,locs[i].y);
-    curveTightness(random(1.5,2));
+    // curveTightness(random(1.5,2));
     // get number of this city
     let d = cityA.indexOf(locs[i].city);
     // draw parcours points
@@ -264,7 +290,7 @@ function draw() {
   fill(255,0,0,100);
   textAlign(CENTER);
   ellipse(locs[locs.length-1].x,locs[locs.length-1].y,50-random(25));
-  fill(130,10,10,180);
+  fill(parcoursFill);
   stroke(0,0);
   textSize(sizeT(0)*1.2);
   text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y+sizeT(-1)*1.5);
