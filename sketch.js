@@ -134,7 +134,6 @@ function draw() {
   // background(150,160,220,100);
   background(backgroundColor);
 
-
 // info text Right
   if(locs){
     const top = sizeT(-1)*1.5;
@@ -146,48 +145,42 @@ function draw() {
     if(locs.length<50){
       // console.log(m);
       textSize(sizeT(1)*1.5);
-      fill(0,0,150,80);
+      fill(rightTextBlue);
       text("Data of Jane Joe",left,top+random(1,2));
       textSize(sizeT(0)*1.5);
+      fill(rightTextRed);
       text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+random(1,2));
       textSize(sizeT(1));
-
+      fill(rightTextBlue);
       text("We believe you live in:",left,top+sizeT(-1)*2+random(1,2));
-      fill(150,0,0,100);
+      fill(rightTextRed);
       textSize(sizeT(0)*1.5);
-
       text(cityA[Math.floor(random(5,20))],left,top+sizeT(-1)*3+random(1,2));
     }
     else{
       textSize(sizeT(1)*1.5);
-
-      fill(0,0,150,80);
-
+      fill(rightTextBlue);
       text("Data of Jane Joe",left,top+random(1,2));
       textSize(sizeT(0)*1.5);
-      fill(150,0,0,100);
+      fill(rightTextRed);
       text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+random(1,2));
       textSize(sizeT(1));
-      fill(0,0,150,80);
-
+      fill(rightTextBlue);
       text("We believe you live in:",left,top+sizeT(-1)*2+random(1,2));
-      fill(150,0,0,100);
+      fill(rightTextRed);
       textSize(sizeT(0)*1.5);
-
       text(m[0][0].place,left,top+sizeT(-1)*3+random(1,2));
       textSize(sizeT(1));
-      fill(0,0,150,80);
-
+      fill(rightTextBlue);
       text("Your secondary residence is:",left,top+sizeT(-1)*4+random(1,2));
       textSize(sizeT(0)*1.5);
-
-      fill(150,0,0,100);
+      fill(rightTextRed);
       text(m[1][0].place,left,top+sizeT(-1)*5+random(1,2));
 
     }
 // date time Left
     textAlign(LEFT);
-    fill(150,0,0,random(0,1000));
+    fill(rightTextRed[0],rightTextRed[1],rightTextRed[2],random(0,1000));
     textSize(sizeT(1)*1.4)
     text(locs[locs.length-1].date+"\n"+locs[locs.length-1].time,15,height*0.85);
     textSize(sizeT(0));
@@ -195,7 +188,7 @@ function draw() {
 
 // provocative sentences
     if(mouseX>width*0.8){
-      fill(150,0,0,random(0,1000));
+      fill(rightTextRed[0],rightTextRed[1],rightTextRed[2],random(0,1000));
       text("Each time you connect,\nFacebook knows where you are",15,height*0.85+sizeT(-1)*3+random(0,2));
     }
     pop();
@@ -260,38 +253,38 @@ function draw() {
     // draw parcours points
     push();
     noStroke();
-    // color blue
-    fill(0,0,random(110,120),50);
+    // color blue parcours circles 
+    fill(parcoursCirclesFill[0],parcoursCirclesFill[1],parcoursCirclesFill[2]+Math.random()*10,parcoursCirclesFill[3]);
     ellipse(locs[i].x,locs[i].y,random(10,20)+locs[i].size);
-    fill(255-cityArray[d].length*1,255-cityArray[d].length*5,0,20*cityArray[d].length);
     textSize(sizeT(0)+Math.random()/2);
     textAlign(CENTER);
     // Draw frequented cities
     if(cityArray[d].length>4){
-      fill(100,0,0,10);
+      fill(cityHabitFill);
       let r = constrain(cityArray[d].length*8,0,300)+random(-10,10)*cityArray[d].length/1.3 ;
       if(cityArray[d].length>30){
-        fill(100,0,0,2);
+        fill(cityHabitFill[0],cityHabitFill[1],cityHabitFill[2],cityHabitFill[3]/5);
         r = constrain(cityArray[d].length*8,0,300)+random(-10,10)*cityArray[d].length/4;
       }
       ellipse(cityArray[d][0].x,cityArray[d][0].y,r);
-      fill(255-cityArray[d].length*1,255-cityArray[d].length*5,20,50);
+      fill(cityHabitText[0]-cityArray[d].length*1,cityHabitText[1]-cityArray[d].length*5,cityHabitText[2],cityHabitText[3]);
       textSize(constrain(cityArray[d].length*1.8,10,45));
       cityArray[d][0].y>height/2?text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y-cityArray[d].length):text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y+cityArray[d].length*4+Math.random()*2);
     }
     pop();
     push();
-    stroke(50,0,random(100,255),80);
+    stroke(innerCercleS[0],innerCercleS[1]+random(0,155),innerCercleS[2],innerCercleS[3]);
     ellipse(locs[i].x,locs[i].y,random(10,15));
     pop();
   }
   // console.log(cityArray);
   push()
-  fill(255,0,0,100);
+  // on Circle text
+  fill(cityTextFill);
   textAlign(CENTER);
   ellipse(locs[locs.length-1].x,locs[locs.length-1].y,50-random(25));
   fill(parcoursFill);
-  stroke(0,0);
+  noStroke();
   textSize(sizeT(0)*1.2);
   text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y+sizeT(-1)*1.5);
 
@@ -303,7 +296,7 @@ function draw() {
   if(height>width){
     push();
     stroke(0,0);
-    fill(30,50,150,100);
+    fill(navBar);
     rect(width-15,mouseY,15,height-mouseY);
     pop();
   }
@@ -311,7 +304,7 @@ function draw() {
     // let m = mouseP.length/1000*width;
     push();
     stroke(0,0);
-    fill(30,50,150,100);
+    fill(navBar);
     rect(0,height-15,mouseX,15);
     pop();
   }
@@ -320,21 +313,12 @@ function draw() {
 
 
 function Choose(array){
-  
-  // if(pmouseX>1||pmouseY>1){
-  //   let m = 1;
-  //   mouseP.push(m);
-  // }
-  // let n = Math.floor(map(mouseP.length,0,1000,0,array.length))+1
-
   let n = Math.floor(constrain(map(mouseX,0,width,0,array.length),0,array.length))+1;
   if(height>width){
     n = Math.floor(constrain(map(height-mouseY,0,height,0,array.length),0,array.length))+1;
   }
   return array.slice(0,n);
 }
-
-
 document.touchmove = function(n) {
   n.preventDefault();
 }
