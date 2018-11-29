@@ -13,32 +13,16 @@ let img,font;
 let mouseP = [];
 let nuit = false;
 
-
-let backgroundColor = [255,255,255,100];
-let cityHabitText = [255,255,20,50];
-// text habit city
-let cityTextFill = [255,0,0,100];
-// circles habit city
-let cityHabitFill = [100,0,0,10];
-let parcoursCirclesFill = [0,0,110,50];
-let rightTextBlue = [0,0,150,80];
-let rightTextRed = [150,0,0,100];
-let cityHighlight = rightTextRed;
-let city =[0,0,180,20];
-let parcoursStroke=[200,200,20,80];
-let parcoursFill = [130,10,10,180];
-let innerCercleS = [50,0,100,80];
-let navBar = [30,50,150,100];
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
   font = loadFont('assets/SpaceMono-Regular.ttf');
   // font = loadFont('assets/OpenSans-Regular.ttf');
-  
 }
 function setup() {
 
   textFont(font);
   noCursor();
+  // get information from tables
   for(let e = 0; e < 210; e++){
     let m = split(table.getString(e,1),",");
     let str = split(table.getString(e,5),",")[0];
@@ -57,33 +41,21 @@ function setup() {
     locss.push(point);
     let mm = point.city;
     let nn = point.place;
-    // console.log(mm)
+    // city & place names without duplites
     cityA.indexOf(mm)===-1?cityA.push(mm):"";
     placeA.indexOf(nn)===-1?placeA.push(nn):"";
-    // console.log(placeA);
   }
-  console.log(cityA);
-
   createCanvas(windowWidth, windowHeight);
-  // osc = new p5.Oscillator();
-  // osc.disconnect();
-  // osc.connect(filt);
-  // osc.setType('sawtooth');
-  // osc.start();
-  // osc.freq(0);
-  // noCursor();
-  let minx = Infinity;
-  let maxx = -Infinity;
-  let miny = Infinity;
-  let maxy = -Infinity;
 
+  // calculate data x-y range
+  let [minx,maxx,miny,maxy] = [Infinity,-Infinity,Infinity,-Infinity];
   locss.forEach(point=>{
     point.x>maxx?maxx=point.x:""
     point.y>maxy?maxy=point.y:""
     point.y<miny?miny=point.y:""
     point.x<minx?minx=point.x:""
   })
-// MAP TO SCREEN
+  // MAP TO SCREEN
   if(height>width){
     locss.map(point=>{
       point.x = map(point.x,minx,maxx,width*0.9-50,width*0.1+100);
@@ -98,10 +70,6 @@ function setup() {
   }
   mouseY = height;
   mouseX = 0;
-}
-function changeC(){
-  let color = new color(random(255),random(255),random(255),50);
-  return color;
 }
 
 function sizeT(n){
@@ -135,7 +103,6 @@ function sizeT(n){
   }
 }
 function draw() {
-
   // splice array, create cityArray&placeArray
   let locs = Choose(locss);
   for(let i =0;i<cityA.length;i++){
@@ -146,8 +113,6 @@ function draw() {
   }
   let m = [...cityArray];
   m = m.sort((a,b)=>(b.length-a.length));
-  // console.log(m==)
-
   let n = [...placeArray];
   n = n.sort((a,b)=>(b.length-a.length));
   if(locs[locs.length-1].hour>19||locs[locs.length-1].hour<8){
@@ -155,11 +120,13 @@ function draw() {
   }else{
     nuit = false;
   }
+  // switch color
   scolor(nuit);
-
-  // background(150,160,220,100);
+  let vmin;
+  width>height?vmin=height:vmin=width;
   background(backgroundColor);
 
+// Texts
 // info text Right
   if(locs){
     const top = sizeT(-1)*1.5;
@@ -204,7 +171,7 @@ function draw() {
       text(m[1][0].place,left,top+sizeT(-1)*5+random(1,2));
 
     }
-// date time Left
+    // date time Left
     textAlign(LEFT);
     fill(rightTextRed[0],rightTextRed[1],rightTextRed[2],random(0,1000));
     textSize(sizeT(1)*1.4)
@@ -305,7 +272,6 @@ function draw() {
     ellipse(locs[i].x,locs[i].y,random(10,15));
     pop();
   }
-  // console.log(cityArray);
   push()
   // on Circle text
   fill(cityTextFill);
@@ -315,12 +281,9 @@ function draw() {
   noStroke();
   textSize(sizeT(0)*1.2);
   text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y+sizeT(-1)*1.5);
-
   pop();
   endShape();
-  let vmin;
-  width>height?vmin=height:vmin=width;
-  // bar de navigation
+// bar de navigation
   if(height>width){
     push();
     stroke(0,0);
@@ -329,7 +292,6 @@ function draw() {
     pop();
   }
   else{
-    // let m = mouseP.length/1000*width;
     push();
     stroke(0,0);
     fill(navBar);
@@ -338,9 +300,7 @@ function draw() {
   }
 }
 
-
-
-function Choose(array){
+const Choose = (array)=>{
   let n = Math.floor(constrain(map(mouseX,0,width,0,array.length),0,array.length))+1;
   if(height>width){
     n = Math.floor(constrain(map(height-mouseY,0,height,0,array.length),0,array.length))+1;
