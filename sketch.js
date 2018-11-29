@@ -11,9 +11,29 @@ let cityArray=[];
 let placeArray=[];
 let img,font;
 let mouseP = [];
+let nuit = false;
+
+
+let backgroundColor = [255,255,255,100];
+let cityHabitText = [255,255,20,50];
+// text habit city
+let cityTextFill = [255,0,0,100];
+// circles habit city
+let cityHabitFill = [100,0,0,10];
+let parcoursCirclesFill = [0,0,110,50];
+let rightTextBlue = [0,0,150,80];
+let rightTextRed = [150,0,0,100];
+let cityHighlight = rightTextRed;
+let city =[0,0,180,20];
+let parcoursStroke=[200,200,20,80];
+let parcoursFill = [130,10,10,180];
+let innerCercleS = [50,0,100,80];
+let navBar = [30,50,150,100];
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
   font = loadFont('assets/SpaceMono-Regular.ttf');
+  // font = loadFont('assets/OpenSans-Regular.ttf');
+  
 }
 function setup() {
 
@@ -130,6 +150,12 @@ function draw() {
 
   let n = [...placeArray];
   n = n.sort((a,b)=>(b.length-a.length));
+  if(locs[locs.length-1].hour>19||locs[locs.length-1].hour<8){
+    nuit = true;
+  }else{
+    nuit = false;
+  }
+  scolor(nuit);
 
   // background(150,160,220,100);
   background(backgroundColor);
@@ -242,7 +268,8 @@ function draw() {
   fill(0,0);
   strokeWeight(2.5-Math.random()*2);
     // color stroke
-  stroke(parcoursStroke[0],parcoursStroke[1]-random(0,200),parcoursStroke[2],parcoursStroke[3]);
+    // dynamic
+  nuit?stroke(parcoursStroke[0],parcoursStroke[1]+random(0,200),parcoursStroke[2],parcoursStroke[3]):stroke(parcoursStroke[0],parcoursStroke[1]-random(0,200),parcoursStroke[2],parcoursStroke[3]);
   let x = 0;
   let y = 0;
   for(let i = 0; i<locs.length;i++){
@@ -254,7 +281,7 @@ function draw() {
     push();
     noStroke();
     // color blue parcours circles 
-    fill(parcoursCirclesFill[0],parcoursCirclesFill[1],parcoursCirclesFill[2]+Math.random()*10,parcoursCirclesFill[3]);
+    nuit?fill(parcoursCirclesFill[0],parcoursCirclesFill[1],parcoursCirclesFill[2]-Math.random()*10,parcoursCirclesFill[3]):fill(parcoursCirclesFill[0],parcoursCirclesFill[1],parcoursCirclesFill[2]+Math.random()*10,parcoursCirclesFill[3]);
     ellipse(locs[i].x,locs[i].y,random(10,20)+locs[i].size);
     textSize(sizeT(0)+Math.random()/2);
     textAlign(CENTER);
@@ -267,13 +294,14 @@ function draw() {
         r = constrain(cityArray[d].length*8,0,300)+random(-10,10)*cityArray[d].length/4;
       }
       ellipse(cityArray[d][0].x,cityArray[d][0].y,r);
-      fill(cityHabitText[0]-cityArray[d].length*1,cityHabitText[1]-cityArray[d].length*5,cityHabitText[2],cityHabitText[3]);
+      // invert
+      nuit?fill(cityHabitText[0]+cityArray[d].length*1,cityHabitText[1]+cityArray[d].length*5,cityHabitText[2],cityHabitText[3]):fill(cityHabitText[0]+cityArray[d].length*1,cityHabitText[1]+cityArray[d].length*5,cityHabitText[2],cityHabitText[3]);
       textSize(constrain(cityArray[d].length*1.8,10,45));
       cityArray[d][0].y>height/2?text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y-cityArray[d].length):text(locs[i].city+" ",cityArray[d][0].x,cityArray[d][0].y+cityArray[d].length*4+Math.random()*2);
     }
     pop();
     push();
-    stroke(innerCercleS[0],innerCercleS[1]+random(0,155),innerCercleS[2],innerCercleS[3]);
+    nuit?stroke(innerCercleS[0],innerCercleS[1]-random(0,155),innerCercleS[2],innerCercleS[3]):stroke(innerCercleS[0],innerCercleS[1]+random(0,155),innerCercleS[2],innerCercleS[3]);
     ellipse(locs[i].x,locs[i].y,random(10,15));
     pop();
   }
