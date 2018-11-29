@@ -20,7 +20,6 @@ function preload() {
   // font = loadFont('assets/OpenSans-Regular.ttf');
 }
 function setup() {
-
   textFont(font);
   noCursor();
   // get information from tables
@@ -116,16 +115,19 @@ function sizeT(n){
 function draw() {
   // splice array, create cityArray&placeArray
   let locs = Choose(locss);
+  // 2nd arrays with frequency
   for(let i =0;i<cityA.length;i++){
     cityArray[i] = locs.filter(obj=>obj.city===cityA[i]);
   }
   for(let i =0;i<placeA.length;i++){
     placeArray[i] = locs.filter(obj=>obj.place===placeA[i]);
   }
+  // 3rd arrays with items sorted by frequency
   let m = [...cityArray];
   m = m.sort((a,b)=>(b.length-a.length));
   let n = [...placeArray];
   n = n.sort((a,b)=>(b.length-a.length));
+  // mode nuit et jour
   if(locs[locs.length-1].hour>19||locs[locs.length-1].hour<8){
     nuit = true;
   }else{
@@ -136,7 +138,6 @@ function draw() {
   let vmin;
   width>height?vmin=height:vmin=width;
   background(backgroundColor);
-
 // Texts
 // info text Right
   if(locs){
@@ -252,8 +253,7 @@ function draw() {
   let y = 0;
   for(let i = 0; i<locs.length;i++){
     vertex(locs[i].x,locs[i].y);
-    // curveTightness(random(1.5,2));
-    // get number of this city
+    // get No. of this city
     let d = cityA.indexOf(locs[i].city);
     // draw parcours points
     push();
