@@ -71,15 +71,15 @@ function setup() {
   }
 
   //fake predict
-  for(let i =0;i<locss.length;i++){
-    let t = {
-      x:locss[i].x+random(-1,1)*(locss.length-i),
-      y:locss[i].x+random(-1,1)*(locss.length-i)
-    }
-    predict.push(t);
-  }
-  mouseY = height;
-  mouseX = 0;
+  // for(let i =0;i<locss.length;i++){
+  //   let t = {
+  //     x:locss[i].x+random(-1,1)*(locss.length-i),
+  //     y:locss[i].x+random(-1,1)*(locss.length-i)
+  //   }
+  //   predict.push(t);
+  // }
+  // mouseY = height;
+  // mouseX = 0;
   
 }
 
@@ -294,10 +294,10 @@ function draw() {
   textSize(sizeT(0)*1.2);
   text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y+sizeT(-1)*1.5);
   pop();
-  push();
-  fill(255,0,0);
-  ellipse(predict[locs.length-1].x,predict[locs.length-1].y,75-random(25));
-  pop();
+  // push();
+  // fill(255,0,0);
+  // ellipse(predict[locs.length-1].x,predict[locs.length-1].y,75-random(25));
+  // pop();
 
 // bar de navigation
   if(height>width){
