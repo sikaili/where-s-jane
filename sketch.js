@@ -12,6 +12,7 @@ let placeArray=[];
 let img,font;
 let mouseP = [];
 let nuit = false;
+let predict = [];
 
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
@@ -68,8 +69,18 @@ function setup() {
       point.y = map(point.y,miny,maxy,height*0.23+50,height*0.9-50);
     })
   }
+
+  //fake predict
+  for(let i =0;i<locss.length;i++){
+    let t = {
+      x:locss[i].x+random(-1,1)*(locss.length-i),
+      y:locss[i].x+random(-1,1)*(locss.length-i)
+    }
+    predict.push(t);
+  }
   mouseY = height;
   mouseX = 0;
+  
 }
 
 function sizeT(n){
@@ -272,7 +283,8 @@ function draw() {
     ellipse(locs[i].x,locs[i].y,random(10,15));
     pop();
   }
-  push()
+  endShape();
+  push();
   // on Circle text
   fill(cityTextFill);
   textAlign(CENTER);
@@ -282,7 +294,11 @@ function draw() {
   textSize(sizeT(0)*1.2);
   text(locs[locs.length-1].place,locs[locs.length-1].x,locs[locs.length-1].y+sizeT(-1)*1.5);
   pop();
-  endShape();
+  push();
+  fill(255,0,0);
+  ellipse(predict[locs.length-1].x,predict[locs.length-1].y,75-random(25));
+  pop();
+
 // bar de navigation
   if(height>width){
     push();
