@@ -4,8 +4,7 @@ document.addEventListener('touchmove', function(n) {
 }, {passive: false });
 
 
-document.addEventListener('dblclick', ()=>{nuit=!nuit;
-
+document.addEventListener('dblclick', ()=>{
 }
   , {passive: false });
 var tapedTwice =false;
