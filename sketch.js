@@ -1,8 +1,7 @@
-
+p5.disableFriendlyErrors = true;
 document.addEventListener('touchmove', function(n) {
     n.preventDefault();
 }, {passive: false });
-
 
 document.addEventListener('dblclick', ()=>{nuit=!nuit
 }
@@ -16,7 +15,7 @@ function Dclick(event) {
   }
   event.preventDefault();
   //action on double tap goes below
-  nuit=!nuit;
+        // nuit=!nuit;
   // document.getElementById("myDropdown").classList.toggle("show");
 
 }
@@ -33,7 +32,7 @@ let mouseP = [];
 let nuit = true;
 let predict = [];
 let locs;
-
+let [m,n] = [[],[]];
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
   font = loadFont('assets/SpaceMono-Regular.ttf');
@@ -88,6 +87,19 @@ function setup() {
     })
   }
 
+  locs = locss.slice(0,1);
+
+  for(let i =0;i<cityA.length;i++){
+    cityArray[i] = locs.filter(obj=>obj.city===cityA[i]);
+  }
+  for(let i =0;i<placeA.length;i++){
+    placeArray[i] = locs.filter(obj=>obj.place===placeA[i]);
+  }
+  // 3rd arrays with items sorted by frequency
+  m = [...cityArray];
+  m = m.sort((a,b)=>(b.length-a.length));
+  n = [...placeArray];
+  n = n.sort((a,b)=>(b.length-a.length));
   //fake predict
   // for(let i =0;i<locss.length;i++){
   //   let t = {
@@ -133,20 +145,21 @@ function sizeT(n){
 }
 function draw() {
   // splice array, create cityArray&placeArray
-  // if(pmouseX>)
-  locs = Choose(locss);
-  // 2nd arrays with frequency
-  for(let i =0;i<cityA.length;i++){
-    cityArray[i] = locs.filter(obj=>obj.city===cityA[i]);
+  locs = (abs(mouseX-pmouseX)>0||abs(mouseY-pmouseY)>0)?Choose(locss):locs;
+  if(abs(mouseX-pmouseX)>0||abs(mouseY-pmouseY)>0){
+    // 2nd arrays with frequency
+    for(let i =0;i<cityA.length;i++){
+      cityArray[i] = locs.filter(obj=>obj.city===cityA[i]);
+    }
+    for(let i =0;i<placeA.length;i++){
+      placeArray[i] = locs.filter(obj=>obj.place===placeA[i]);
+    }
+    // 3rd arrays with items sorted by frequency
+    m = [...cityArray];
+    m = m.sort((a,b)=>(b.length-a.length));
+    n = [...placeArray];
+    n = n.sort((a,b)=>(b.length-a.length));
   }
-  for(let i =0;i<placeA.length;i++){
-    placeArray[i] = locs.filter(obj=>obj.place===placeA[i]);
-  }
-  // 3rd arrays with items sorted by frequency
-  let m = [...cityArray];
-  m = m.sort((a,b)=>(b.length-a.length));
-  let n = [...placeArray];
-  n = n.sort((a,b)=>(b.length-a.length));
   // mode nuit et jour
   // if(locs[locs.length-1].hour>19||locs[locs.length-1].hour<8){
   //   nuit = true;
@@ -171,54 +184,52 @@ function draw() {
       // console.log(m);
       textSize(sizeT(1)*1.5);
       fill(rightTextBlue);
-      text("Data of Jane Joe",left,top+random(1,2));
+      text("Data of Jane Joe",left,top+Math.random());
       textSize(sizeT(0)*1.5);
       fill(rightTextRed);
-      text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+random(1,2));
+      text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+Math.random());
       textSize(sizeT(1));
       fill(rightTextBlue);
-      text("We believe you live in:",left,top+sizeT(-1)*2+random(1,2));
+      text("We believe you live in:",left,top+sizeT(-1)*2+Math.random());
       fill(rightTextRed);
       textSize(sizeT(0)*1.5);
-      text(cityA[Math.floor(random(5,20))],left,top+sizeT(-1)*3+random(1,2));
+      text(cityA[Math.floor(random(5,20))],left,top+sizeT(-1)*3+Math.random());
     }
     else{
       textSize(sizeT(1)*1.5);
       fill(rightTextBlue);
-      text("Data of Jane Joe",left,top+random(1,2));
+      text("Data of Jane Joe",left,top+Math.random());
       textSize(sizeT(0)*1.5);
       fill(rightTextRed);
-      text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+random(1,2));
+      text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+Math.random());
       textSize(sizeT(1));
       fill(rightTextBlue);
-      text("We believe you live in:",left,top+sizeT(-1)*2+random(1,2));
+      text("We believe you live in:",left,top+sizeT(-1)*2+Math.random());
       fill(rightTextRed);
       textSize(sizeT(0)*1.5);
-      text(m[0][0].place,left,top+sizeT(-1)*3+random(1,2));
+      text(m[0][0].place,left,top+sizeT(-1)*3+Math.random());
       textSize(sizeT(1));
       fill(rightTextBlue);
-      text("Your secondary residence is:",left,top+sizeT(-1)*4+random(1,2));
+      text("Your secondary residence is:",left,top+sizeT(-1)*4+Math.random());
       textSize(sizeT(0)*1.5);
       fill(rightTextRed);
-      text(m[1][0].place,left,top+sizeT(-1)*5+random(1,2));
-
+      text(m[1][0].place,left,top+sizeT(-1)*5+Math.random());
     }
     // date time Left
     textAlign(LEFT);
-    fill(rightTextRed[0],rightTextRed[1],rightTextRed[2],random(0,1000));
+    fill(rightTextRed[0],rightTextRed[1],rightTextRed[2],Math.random()*1000);
     textSize(sizeT(1)*1.4)
     text(locs[locs.length-1].date+"\n"+locs[locs.length-1].time,15,height*0.85);
     textSize(sizeT(0));
-    text("Total facebook connections:"+locs[locs.length-1].n,15,height*0.85+sizeT(-1)*2.3+random(0,2));
+    text("Total facebook connections:"+locs[locs.length-1].n,15,height*0.85+sizeT(-1)*2.3+Math.random()*2);
 
 // provocative sentences
     if(mouseX>width*0.8){
-      fill(rightTextRed[0],rightTextRed[1],rightTextRed[2],random(0,1000));
-      text("Each time you connect,\nFacebook knows where you are",15,height*0.85+sizeT(-1)*3+random(0,2));
+      fill(rightTextRed[0],rightTextRed[1],rightTextRed[2],Math.random()*1000);
+      text("Each time you connect,\nFacebook knows where you are",15,height*0.85+sizeT(-1)*3+Math.random()*2);
     }
     pop();
 // Left City List
-
     if(m.length>10){
       for(let i =0;i<m.length;i++){
         if(!m[i][0]||i>10){
@@ -268,7 +279,7 @@ function draw() {
   strokeWeight(2.5-Math.random()*2);
     // color stroke
     // dynamic
-  nuit?stroke(parcoursStroke[0],parcoursStroke[1]+random(0,200),parcoursStroke[2],parcoursStroke[3]):stroke(parcoursStroke[0],parcoursStroke[1]-random(0,200),parcoursStroke[2],parcoursStroke[3]);
+  nuit?stroke(parcoursStroke[0],parcoursStroke[1]+Math.random()*200,parcoursStroke[2],parcoursStroke[3]):stroke(parcoursStroke[0],parcoursStroke[1]-Math.random()*200,parcoursStroke[2],parcoursStroke[3]);
   let x = 0;
   let y = 0;
   for(let i = 0; i<locs.length;i++){
@@ -280,7 +291,7 @@ function draw() {
     noStroke();
     // color blue parcours circles 
     nuit?fill(parcoursCirclesFill[0],parcoursCirclesFill[1],parcoursCirclesFill[2]-Math.random()*10,parcoursCirclesFill[3]):fill(parcoursCirclesFill[0],parcoursCirclesFill[1],parcoursCirclesFill[2]+Math.random()*10,parcoursCirclesFill[3]);
-    ellipse(locs[i].x,locs[i].y,random(10,20)+locs[i].size);
+    ellipse(locs[i].x,locs[i].y,10+Math.random()*10+locs[i].size);
     textSize(sizeT(0)+Math.random()/2);
     textAlign(CENTER);
     // Draw frequented cities
@@ -299,8 +310,8 @@ function draw() {
     }
     pop();
     push();
-    nuit?stroke(innerCercleS[0],innerCercleS[1]-random(0,155),innerCercleS[2],innerCercleS[3]):stroke(innerCercleS[0],innerCercleS[1]+random(0,155),innerCercleS[2],innerCercleS[3]);
-    ellipse(locs[i].x,locs[i].y,random(10,15));
+    nuit?stroke(innerCercleS[0],innerCercleS[1]-Math.random()*155,innerCercleS[2],innerCercleS[3]):stroke(innerCercleS[0],innerCercleS[1]+Math.random()*155,innerCercleS[2],innerCercleS[3]);
+    ellipse(locs[i].x,locs[i].y,10+Math.random()*5);
     pop();
   }
   endShape();
@@ -308,7 +319,7 @@ function draw() {
   // on Circle text
   fill(cityTextFill);
   textAlign(CENTER);
-  ellipse(locs[locs.length-1].x,locs[locs.length-1].y,50-random(25));
+  ellipse(locs[locs.length-1].x,locs[locs.length-1].y,50-Math.random()*25);
   fill(parcoursFill);
   noStroke();
   textSize(sizeT(0)*1.2);
@@ -337,11 +348,11 @@ function draw() {
 }
 
 const Choose = (array)=>{
-  let n = Math.floor(constrain(map(mouseX,0,width,0,array.length),0,array.length))+1;
+  let e = Math.floor(constrain(map(mouseX,0,width,0,array.length),0,array.length))+1;
   if(height>width){
-    n = Math.floor(constrain(map(height-mouseY,0,height,0,array.length),0,array.length))+1;
+    e = Math.floor(constrain(map(height-mouseY,0,height,0,array.length),0,array.length))+1;
   }
-  return array.slice(0,n);
+  return array.slice(0,e);
 }
 document.touchmove = function(n) {
   n.preventDefault();
