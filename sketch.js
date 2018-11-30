@@ -4,7 +4,7 @@ document.addEventListener('touchmove', function(n) {
 }, {passive: false });
 
 
-document.addEventListener('dblclick', ()=>{
+document.addEventListener('dblclick', ()=>{nuit=!nuit
 }
   , {passive: false });
 var tapedTwice =false;
@@ -30,7 +30,7 @@ let cityArray=[];
 let placeArray=[];
 let img,font;
 let mouseP = [];
-let nuit = false;
+let nuit = true;
 let predict = [];
 let locs;
 
