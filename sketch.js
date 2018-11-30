@@ -2,7 +2,6 @@ p5.disableFriendlyErrors = true;
 document.addEventListener('touchmove', function(n) {
     n.preventDefault();
 }, {passive: false });
-
 document.addEventListener('dblclick', ()=>{nuit=!nuit
 }
   , {passive: false });
@@ -14,11 +13,8 @@ function Dclick(event) {
       return false;
   }
   event.preventDefault();
-  //action on double tap goes below
-        // nuit=!nuit;
-  // document.getElementById("myDropdown").classList.toggle("show");
-
 }
+
 
 let state = -1;
 let doubleClick,ts=[];
