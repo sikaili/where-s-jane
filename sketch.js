@@ -2,6 +2,26 @@
 document.addEventListener('touchmove', function(n) {
     n.preventDefault();
 }, {passive: false });
+
+
+document.addEventListener('dblclick', ()=>{nuit=!nuit;
+
+}
+  , {passive: false });
+var tapedTwice =false;
+function Dclick(event) {
+  if(!tapedTwice) {
+      tapedTwice = true;
+      setTimeout( function() { tapedTwice = false; }, 300 );
+      return false;
+  }
+  event.preventDefault();
+  //action on double tap goes below
+  nuit=!nuit;
+  // document.getElementById("myDropdown").classList.toggle("show");
+
+}
+
 let state = -1;
 let doubleClick,ts=[];
 let mic,osc,filt;
@@ -13,11 +33,11 @@ let img,font;
 let mouseP = [];
 let nuit = false;
 let predict = [];
+let locs;
 
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
   font = loadFont('assets/SpaceMono-Regular.ttf');
-  // font = loadFont('assets/OpenSans-Regular.ttf');
 }
 function setup() {
   textFont(font);
@@ -114,7 +134,8 @@ function sizeT(n){
 }
 function draw() {
   // splice array, create cityArray&placeArray
-  let locs = Choose(locss);
+  // if(pmouseX>)
+  locs = Choose(locss);
   // 2nd arrays with frequency
   for(let i =0;i<cityA.length;i++){
     cityArray[i] = locs.filter(obj=>obj.city===cityA[i]);
@@ -128,11 +149,11 @@ function draw() {
   let n = [...placeArray];
   n = n.sort((a,b)=>(b.length-a.length));
   // mode nuit et jour
-  if(locs[locs.length-1].hour>19||locs[locs.length-1].hour<8){
-    nuit = true;
-  }else{
-    nuit = false;
-  }
+  // if(locs[locs.length-1].hour>19||locs[locs.length-1].hour<8){
+  //   nuit = true;
+  // }else{
+  //   nuit = false;
+  // }
   // switch color
   scolor(nuit);
   let vmin;

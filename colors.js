@@ -1,7 +1,9 @@
 
+
+
 function scolor(nuit){
 
-if(nuit){
+if(nuit===true){
  backgroundColor = inverColor([255,255,255,100]);
 // dynamic
  cityHabitText = inverColor([255,255,20,50]);
@@ -22,7 +24,7 @@ if(nuit){
  navBar = inverColor([30,50,150,100]);
 }
 else{
-   backgroundColor = [255,255,255,100];
+   backgroundColor = [255,255,255,60];
    cityHabitText = [255,255,20,50];
   // text habit city
    cityTextFill = [255,0,0,100];
@@ -39,15 +41,12 @@ else{
    navBar = [30,50,150,100];
 }
 
-
- inverColor = (array) =>{
-   t =[];
-  t[0]=255-array[0];
-  t[1]=255-array[1];
-  t[2]=255-array[2];
-  t[3]=array[3];
-  return t;
 }
-
-
+const inverColor = (array) =>{
+  t =[];
+ t[0]=255-array[0];
+ t[1]=255-array[1];
+ t[2]=255-array[2];
+ t[3]=array[3];
+ return t;
 }
