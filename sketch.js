@@ -29,9 +29,29 @@ let nuit = true;
 let predict = [];
 let locs;
 let [m,n] = [[],[]];
+
+backgroundColor = [255,255,255,60];
+cityHabitText = [255,255,20,50];
+// text habit city
+cityTextFill = [255,255,0,100];
+// circles habit city
+cityHabitFill = [100,0,0,10];
+parcoursCirclesFill = [0,0,110,50];
+rightTextBlue = [0,0,150,80];
+rightTextRed = [150,0,0,100];
+cityHighlight = rightTextRed;
+city =[0,0,180,20];
+parcoursStroke=[200,200,20,80];
+parcoursFill = [130,10,10,180];
+innerCercleS = [50,0,100,80];
+navBar = [30,50,150,100];
+
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
-  font = loadFont('assets/SpaceMono-Regular.ttf');
+  // font = loadFont('assets/SpaceMono-Regular.ttf');
+  // font = loadFont('assets/iosevka-regular.ttf')
+  font = loadFont('assets/AndaleMono.ttf')
+
 }
 function setup() {
   textFont(font);
