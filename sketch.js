@@ -15,7 +15,7 @@ function Dclick(event) {
   event.preventDefault();
 }
 
-
+let ee= 0;
 let state = -1;
 let doubleClick,ts=[];
 let mic,osc,filt;
@@ -49,12 +49,15 @@ function preload() {
   table = loadTable("assets/e5.csv","csv","header");
   // font = loadFont('assets/SpaceMono-Regular.ttf');
   // font = loadFont('assets/iosevka-regular.ttf')
-  font = loadFont('assets/AndaleMono.ttf')
+  font = loadFont('assets/AndaleMono.ttf');
+  sound = loadSound("assets/click.m4a");
 
 }
 function setup() {
+  masterVolume(0.2)
   textFont(font);
   noCursor();
+  sound.play();
   // get information from tables
   for(let e = 0; e < 210; e++){
     let m = split(table.getString(e,1),",");
@@ -159,7 +162,7 @@ function sizeT(n){
 }
 function draw() {
   // splice array, create cityArray&placeArray
-  locs = (abs(mouseX-pmouseX)>0||abs(mouseY-pmouseY)>0)&&stage===0?Choose(locss):locs;
+  locs = (abs(mouseX-pmouseX)>1||abs(mouseY-pmouseY)>1)&&stage===0?Choose(locss):locs;
   if(abs(mouseX-pmouseX)>0||abs(mouseY-pmouseY)>0){
     // 2nd arrays with frequency
     for(let i =0;i<cityA.length;i++){
@@ -218,13 +221,13 @@ function draw() {
       text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+Math.random());
       textSize(sizeT(1));
       fill(rightTextBlue);
-      text("We believe you live in:",left,top+sizeT(-1)*2+Math.random());
+      text("Algorithm thinks Jane lives in:",left,top+sizeT(-1)*2+Math.random());
       fill(rightTextRed);
       textSize(sizeT(0)*1.5);
       text(m[0][0].place,left,top+sizeT(-1)*3+Math.random());
       textSize(sizeT(1));
       fill(rightTextBlue);
-      text("Your secondary residence is:",left,top+sizeT(-1)*4+Math.random());
+      text("Her secondary residence is:",left,top+sizeT(-1)*4+Math.random());
       textSize(sizeT(0)*1.5);
       fill(rightTextRed);
       text(m[1][0].place,left,top+sizeT(-1)*5+Math.random());
@@ -263,7 +266,7 @@ function draw() {
         if(height>width){
           textSize(10);
         }
-        text(m[i][0].city,15,30+i*sizeT(-2));
+        text(m[i][0].city+": "+m[i].length +" ",15,45+i*sizeT(-2));
       }
     }
 //  left place list
@@ -280,7 +283,7 @@ function draw() {
         fill(city);
         stroke(city);
       }
-      text(n[i][0].place,15,height*0.85-sizeT(-1)*5+i*sizeT(-2));
+      text(n[i][0].place+" "+n[i].length +" ",15,height*0.85-sizeT(-1)*5+i*sizeT(-2));
     }
 }
   }
@@ -383,8 +386,8 @@ function draw() {
       fill(rightTextRed);
       textAlign(CENTER);
       textSize(sizeT(1)*1.5);
-      text("Swipe from bottom to begin",width/2,height/2);
-      if(mouseY>height-40&&state==1){
+      text(width>height?"Move to the leftside to begin":"Swipe from bottom to begin",width/2,height/2);
+      if((mouseY>height-50&&state==1&&width<height)||(mouseX<50&&width>height)){
         stage = 0;
       }
       pop();
@@ -409,10 +412,15 @@ function draw() {
 
 }
 
-const Choose = (array)=>{
+const Choose = (array)=>{  
   let e = Math.floor(constrain(map(mouseX,0,width,0,array.length),0,array.length))+1;
   if(height>width){
     e = Math.floor(constrain(map(height-mouseY,0,height,0,array.length),0,array.length))+1;
+  }
+  if(ee!=e){
+    sound.rate(1+Math.random()/100);
+    sound.play();
+    ee = e;
   }
   return array.slice(0,e);
 }
