@@ -29,7 +29,7 @@ let nuit = true;
 let predict = [];
 let locs;
 let [m,n] = [[],[]];
-
+let stage = -1;
 backgroundColor = [255,255,255,60];
 cityHabitText = [255,255,20,50];
 // text habit city
@@ -45,7 +45,6 @@ parcoursStroke=[200,200,20,80];
 parcoursFill = [130,10,10,180];
 innerCercleS = [50,0,100,80];
 navBar = [30,50,150,100];
-
 function preload() {
   table = loadTable("assets/e5.csv","csv","header");
   // font = loadFont('assets/SpaceMono-Regular.ttf');
@@ -126,7 +125,6 @@ function setup() {
   // }
   // mouseY = height;
   // mouseX = 0;
-  
 }
 
 function sizeT(n){
@@ -161,7 +159,7 @@ function sizeT(n){
 }
 function draw() {
   // splice array, create cityArray&placeArray
-  locs = (abs(mouseX-pmouseX)>0||abs(mouseY-pmouseY)>0)?Choose(locss):locs;
+  locs = (abs(mouseX-pmouseX)>0||abs(mouseY-pmouseY)>0)&&stage===0?Choose(locss):locs;
   if(abs(mouseX-pmouseX)>0||abs(mouseY-pmouseY)>0){
     // 2nd arrays with frequency
     for(let i =0;i<cityA.length;i++){
@@ -204,12 +202,12 @@ function draw() {
       textSize(sizeT(0)*1.5);
       fill(rightTextRed);
       text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+Math.random());
-      textSize(sizeT(1));
-      fill(rightTextBlue);
-      text("We believe you live in:",left,top+sizeT(-1)*2+Math.random());
-      fill(rightTextRed);
-      textSize(sizeT(0)*1.5);
-      text(cityA[Math.floor(random(5,20))],left,top+sizeT(-1)*3+Math.random());
+      // textSize(sizeT(1));
+      // fill(rightTextBlue);
+      // text("We believe you live in:",left,top+sizeT(-1)*2+Math.random());
+      // fill(rightTextRed);
+      // textSize(sizeT(0)*1.5);
+      // text(cityA[Math.floor(random(5,20))],left,top+sizeT(-1)*3+Math.random());
     }
     else{
       textSize(sizeT(1)*1.5);
@@ -231,24 +229,24 @@ function draw() {
       fill(rightTextRed);
       text(m[1][0].place,left,top+sizeT(-1)*5+Math.random());
     }
-    // date time Left
+  // date time Left
     textAlign(LEFT);
     fill(rightTextRed[0],rightTextRed[1],rightTextRed[2],Math.random()*1000);
     textSize(sizeT(1)*1.4)
-    text(locs[locs.length-1].date+"\n"+locs[locs.length-1].time,15,height*0.85);
+    text(locs[locs.length-1].date+"\n"+locs[locs.length-1].time,15,height*0.82);
     textSize(sizeT(0));
-    text("Total facebook connections:"+locs[locs.length-1].n,15,height*0.85+sizeT(-1)*2.3+Math.random()*2);
+    text("Total facebook connections:"+locs[locs.length-1].n,15,height*0.82+sizeT(-1)*2.3+Math.random()*2);
 
 // provocative sentences
-    if(mouseX>width*0.8){
+    if(mouseX>width*0.4){
       fill(rightTextRed[0],rightTextRed[1],rightTextRed[2],Math.random()*1000);
-      text("Each time you connect,\nFacebook knows where you are",15,height*0.85+sizeT(-1)*3+Math.random()*2);
+      text("Each time you connect,\nFacebook knows where you are",15,height*0.82+sizeT(-1)*3+Math.random()*2);
     }
     pop();
 // Left City List
     if(m.length>10){
       for(let i =0;i<m.length;i++){
-        if(!m[i][0]||i>10){
+        if(!m[i][0]||i>4){
           continue
         }
         // console.log(m[i][0].city)
@@ -271,19 +269,16 @@ function draw() {
 //  left place list
   if(n.length>10){
     for(let i =0;i<n.length;i++){
-      if(!n[i][0]||i>5){
+      if(!n[i][0]||i>2){
         continue
       }
-      // console.log(n[i][0].city)
       if(locs[locs.length-1].place==n[i][0].place){
         fill(cityHighlight);
         stroke(cityHighlight);
-
       }
       else{
         fill(city);
         stroke(city);
-
       }
       text(n[i][0].place,15,height*0.85-sizeT(-1)*5+i*sizeT(-2));
     }
@@ -361,6 +356,43 @@ function draw() {
     rect(0,height-15,mouseX,15);
     pop();
   }
+  // mouseX>50?stage=1:stage=0;
+  // console.log(stage);
+  if(stage===-1&&state!=-1){
+    stage = "indicate";
+  }
+  switch(stage){
+    case "indicate" :{
+      push();
+      fill(rectF);
+      rect(0,0,width,height);
+      fill(rightTextRed);
+      textAlign(CENTER);
+      textSize(sizeT(1)*1.5);
+      text("Swipe from bottom to begin",width/2,height/2);
+      if(mouseY>height-40&&state==1){
+        stage = 0;
+      }
+      pop();
+      break;
+    }
+    case "live" :{
+      push();
+      fill(rectF);
+      rect(0,0,width,height);
+      fill(rightTextRed);
+      textAlign(CENTER);
+      textSize(sizeT(1)*1.5);
+      text("We guess you live in :",width/2,height/2);
+      textSize(sizeT(1)*1.5);
+      text(m[0][0].city,width/2,height/2+sizeT(1)*4);
+      pop();
+      break;
+    }
+  }
+
+
+
 }
 
 const Choose = (array)=>{

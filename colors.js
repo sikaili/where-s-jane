@@ -26,6 +26,7 @@ function scolor(nuit){
    rightTextRed = inverColor([150,0,0,100]);
    cityHighlight = rightTextRed;
    city =inverColor([0,0,180,20]);
+   rectF = [0,200];
    // dynamic
 
    parcoursStroke=inverColor([200,200,20,80]);
