@@ -362,6 +362,20 @@ function draw() {
     stage = "indicate";
   }
   switch(stage){
+    case -1:{
+      push();
+      fill(rectF);
+      rect(0,0,width,height);
+      fill(rightTextRed);
+      textAlign(CENTER);
+      textSize(sizeT(1)*1.5);
+      text("We offer you a chance,\nto read a person,\nto see where he lives\nand where he works\n",width/2,height/2);
+      if(state==1){
+        stage=-1;
+      }
+      pop();
+      break;
+    }
     case "indicate" :{
       push();
       fill(rectF);
