@@ -201,42 +201,13 @@ function draw() {
     push();
     strokeWeight(0);
     textAlign(RIGHT);
-    console.log()
-    // if (locs.length < 50) {
-    //   // console.log(m);
-    //   textSize(sizeT(1) * 1.5);
-    //   fill(rightTextBlue);
-    //   text("Data of Jane Joe", left, top + Math.random());
-    //   textSize(sizeT(0) * 1.5);
-    //   fill(rightTextRed);
-    //   text("From 03/07/18 to 23/07/18", left, top + sizeT(-1) + Math.random());
-    //   // textSize(sizeT(1));
-    //   // fill(rightTextBlue);
-    //   // text("We believe you live in:",left,top+sizeT(-1)*2+Math.random());
-    //   // fill(rightTextRed);
-    //   // textSize(sizeT(0)*1.5);
-    //   // text(cityA[Math.floor(random(5,20))],left,top+sizeT(-1)*3+Math.random());
-    // } else {
     textSize(sizeT(1) * 1.5);
     fill(rightTextBlue);
     text("Data of Jane Joe", left, top + Math.random());
     textSize(sizeT(0) * 1.5);
     fill(rightTextRed);
     text("From 03/07/18 to 23/07/18", left, top + sizeT(-1) + Math.random());
-    // textSize(sizeT(1));
-    // fill(rightTextBlue);
-    // text("Algorithm thinks she live in:", left, top + sizeT(-1) * 2 + Math.random());
-    // fill(rightTextRed);
-    // textSize(sizeT(0) * 1.5);
-    // text(m[0][0].place, left, top + sizeT(-1) * 3 + Math.random());
-    // textSize(sizeT(1));
-    // fill(rightTextBlue);
-    // text("Her secondary residence is:", left, top + sizeT(-1) * 4 + Math.random());
-    // textSize(sizeT(0) * 1.5);
-    // fill(rightTextRed);
-    // text(m[1][0].place, left, top + sizeT(-1) * 5 + Math.random());
   }
-
   // date time Left
   textAlign(LEFT);
   fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], 255 - Math.random() * 100);
