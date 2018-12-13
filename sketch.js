@@ -208,6 +208,7 @@ function draw() {
     fill(rightTextRed);
     text("From 03/07/18 to 23/07/18", left, top + sizeT(-1) + Math.random());
   }
+
   // date time Left
   textAlign(LEFT);
   fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], 255 - Math.random() * 100);
@@ -244,22 +245,6 @@ function draw() {
       text(m[i][0].city + ": " + m[i].length + " ", 15, 60 + i * sizeT(-2));
     }
   }
-  //  left place list
-  // if (n.length > 10) {
-  //   for (let i = 0; i < n.length; i++) {
-  //     if (!n[i][0] || i > 2) {
-  //       continue
-  //     }
-  //     if (locs[locs.length - 1].place == n[i][0].place) {
-  //       fill(cityHighlight);
-  //       stroke(cityHighlight);
-  //     } else {
-  //       fill(city);
-  //       stroke(city);
-  //     }
-  //     text(n[i][0].place + " " + n[i].length + " ", 15, height * 0.85 - sizeT(-1) * 5 + i * sizeT(-2));
-  //   }
-  // }
 
   // LINES, CIRCLES
   beginShape();
