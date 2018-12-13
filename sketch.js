@@ -221,7 +221,7 @@ function draw() {
       text("From 03/07/18 to 23/07/18",left,top+sizeT(-1)+Math.random());
       textSize(sizeT(1));
       fill(rightTextBlue);
-      text("Algorithm thinks Jane lives in:",left,top+sizeT(-1)*2+Math.random());
+      text("Algorithm thinks she live in:",left,top+sizeT(-1)*2+Math.random());
       fill(rightTextRed);
       textSize(sizeT(0)*1.5);
       text(m[0][0].place,left,top+sizeT(-1)*3+Math.random());
