@@ -175,8 +175,8 @@ function sizeT(n) {
 
 function draw() {
   // splice array, create cityArray&placeArray
-  locs = (abs(mouseX - pmouseX) > 0 || abs(mouseY - pmouseY) > 0) && (stage === 0) ? Choose(locss) : locs;
-  if (abs(mouseX - pmouseX) > 0 || abs(mouseY - pmouseY) > 0) {
+  locs = (abs(mouseX - pmouseX) > 0 || abs(mouseY - pmouseY) > 0) && (stage === 0) && barLimit() ? Choose(locss) : locs;
+  if ((abs(mouseX - pmouseX) > 0 || abs(mouseY - pmouseY) > 0) && (stage === 0) && barLimit()) {
     // 2nd arrays with frequency
     for (let i = 0; i < cityA.length; i++) {
       cityArray[i] = locs.filter(obj => obj.city === cityA[i]);
@@ -190,16 +190,8 @@ function draw() {
     n = [...placeArray];
     n = n.sort((a, b) => (b.length - a.length));
   }
-  // mode nuit et jour
-  // if(locs[locs.length-1].hour>19||locs[locs.length-1].hour<8){
-  //   nuit = true;
-  // }else{
-  //   nuit = false;
-  // }
-  // switch color
+
   scolor(nuit);
-  let vmin;
-  width > height ? vmin = height : vmin = width;
   background(backgroundColor);
   // Texts
   // info text Right
@@ -210,167 +202,156 @@ function draw() {
     strokeWeight(0);
     textAlign(RIGHT);
     console.log()
-    if (locs.length < 50) {
-      // console.log(m);
-      textSize(sizeT(1) * 1.5);
-      fill(rightTextBlue);
-      text("Data of Jane Joe", left, top + Math.random());
-      textSize(sizeT(0) * 1.5);
-      fill(rightTextRed);
-      text("From 03/07/18 to 23/07/18", left, top + sizeT(-1) + Math.random());
-      // textSize(sizeT(1));
-      // fill(rightTextBlue);
-      // text("We believe you live in:",left,top+sizeT(-1)*2+Math.random());
-      // fill(rightTextRed);
-      // textSize(sizeT(0)*1.5);
-      // text(cityA[Math.floor(random(5,20))],left,top+sizeT(-1)*3+Math.random());
-    } else {
-      textSize(sizeT(1) * 1.5);
-      fill(rightTextBlue);
-      text("Data of Jane Joe", left, top + Math.random());
-      textSize(sizeT(0) * 1.5);
-      fill(rightTextRed);
-      text("From 03/07/18 to 23/07/18", left, top + sizeT(-1) + Math.random());
-      // textSize(sizeT(1));
-      // fill(rightTextBlue);
-      // text("Algorithm thinks she live in:", left, top + sizeT(-1) * 2 + Math.random());
-      // fill(rightTextRed);
-      // textSize(sizeT(0) * 1.5);
-      // text(m[0][0].place, left, top + sizeT(-1) * 3 + Math.random());
-      // textSize(sizeT(1));
-      // fill(rightTextBlue);
-      // text("Her secondary residence is:", left, top + sizeT(-1) * 4 + Math.random());
-      // textSize(sizeT(0) * 1.5);
-      // fill(rightTextRed);
-      // text(m[1][0].place, left, top + sizeT(-1) * 5 + Math.random());
-    }
-    // date time Left
-    textAlign(LEFT);
+    // if (locs.length < 50) {
+    //   // console.log(m);
+    //   textSize(sizeT(1) * 1.5);
+    //   fill(rightTextBlue);
+    //   text("Data of Jane Joe", left, top + Math.random());
+    //   textSize(sizeT(0) * 1.5);
+    //   fill(rightTextRed);
+    //   text("From 03/07/18 to 23/07/18", left, top + sizeT(-1) + Math.random());
+    //   // textSize(sizeT(1));
+    //   // fill(rightTextBlue);
+    //   // text("We believe you live in:",left,top+sizeT(-1)*2+Math.random());
+    //   // fill(rightTextRed);
+    //   // textSize(sizeT(0)*1.5);
+    //   // text(cityA[Math.floor(random(5,20))],left,top+sizeT(-1)*3+Math.random());
+    // } else {
+    textSize(sizeT(1) * 1.5);
+    fill(rightTextBlue);
+    text("Data of Jane Joe", left, top + Math.random());
+    textSize(sizeT(0) * 1.5);
+    fill(rightTextRed);
+    text("From 03/07/18 to 23/07/18", left, top + sizeT(-1) + Math.random());
+    // textSize(sizeT(1));
+    // fill(rightTextBlue);
+    // text("Algorithm thinks she live in:", left, top + sizeT(-1) * 2 + Math.random());
+    // fill(rightTextRed);
+    // textSize(sizeT(0) * 1.5);
+    // text(m[0][0].place, left, top + sizeT(-1) * 3 + Math.random());
+    // textSize(sizeT(1));
+    // fill(rightTextBlue);
+    // text("Her secondary residence is:", left, top + sizeT(-1) * 4 + Math.random());
+    // textSize(sizeT(0) * 1.5);
+    // fill(rightTextRed);
+    // text(m[1][0].place, left, top + sizeT(-1) * 5 + Math.random());
+  }
+
+  // date time Left
+  textAlign(LEFT);
+  fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], Math.random() * 1000);
+  textSize(sizeT(1) * 1.4)
+  text(locs[locs.length - 1].date + "\n" + locs[locs.length - 1].time, 15, height * 0.82);
+  textSize(sizeT(0));
+  // text("Total facebook connections:" + locs[locs.length - 1].n, 15, height * 0.82 + sizeT(-1) * 2.3 + Math.random() * 2);
+
+  // provocative sentences
+  if (mouseX > width * 0.4) {
     fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], Math.random() * 1000);
-    textSize(sizeT(1) * 1.4)
-    text(locs[locs.length - 1].date + "\n" + locs[locs.length - 1].time, 15, height * 0.82);
-    textSize(sizeT(0));
-    // text("Total facebook connections:" + locs[locs.length - 1].n, 15, height * 0.82 + sizeT(-1) * 2.3 + Math.random() * 2);
-
-    // provocative sentences
-    if (mouseX > width * 0.4) {
-      fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], Math.random() * 1000);
-      text("Each time you connect,\nFacebook knows where you are", 15, height * 0.82 + sizeT(-1) * 3 + Math.random() * 2);
-    }
-    pop();
-    // Left City List
-    if (m.length > 10) {
-      for (let i = 0; i < m.length; i++) {
-        if (!m[i][0] || i > 4) {
-          continue
-        }
-        // console.log(m[i][0].city)
-        if (locs[locs.length - 1].city == m[i][0].city) {
-          fill(cityHighlight);
-          stroke(cityHighlight);
-        } else {
-          fill(city);
-          stroke(city);
-
-        }
-        textSize(sizeT(0) * 1.2);
-        if (height > width) {
-          // textSize(sizeT(0));
-        }
-        text(m[i][0].city + ": " + m[i].length + " ", 15, 60 + i * sizeT(-2));
-      }
-    }
-    //  left place list
-    // if (n.length > 10) {
-    //   for (let i = 0; i < n.length; i++) {
-    //     if (!n[i][0] || i > 2) {
-    //       continue
-    //     }
-    //     if (locs[locs.length - 1].place == n[i][0].place) {
-    //       fill(cityHighlight);
-    //       stroke(cityHighlight);
-    //     } else {
-    //       fill(city);
-    //       stroke(city);
-    //     }
-    //     text(n[i][0].place + " " + n[i].length + " ", 15, height * 0.85 - sizeT(-1) * 5 + i * sizeT(-2));
-    //   }
-    // }
+    // text("Each time you connect,\nFacebook knows where you are", 15, height * 0.82 + sizeT(-1) * 3 + Math.random() * 2);
   }
-  // LINES, CIRCLES
-  beginShape();
-  fill(0, 0);
-  strokeWeight(2.5 - Math.random() * 2);
-  // color stroke
-  // dynamic
-  nuit ? stroke(parcoursStroke[0], parcoursStroke[1] + Math.random() * 200, parcoursStroke[2], parcoursStroke[3]) : stroke(parcoursStroke[0], parcoursStroke[1] - Math.random() * 200, parcoursStroke[2], parcoursStroke[3]);
-  let x = 0;
-  let y = 0;
-  for (let i = 0; i < locs.length; i++) {
-    vertex(locs[i].x, locs[i].y);
-    // get No. of this city
-    let d = cityA.indexOf(locs[i].city);
-    // draw parcours points
-    push();
-    noStroke();
-    // color blue parcours circles 
-    nuit ? fill(parcoursCirclesFill[0], parcoursCirclesFill[1], parcoursCirclesFill[2] - Math.random() * 10, parcoursCirclesFill[3]) : fill(parcoursCirclesFill[0], parcoursCirclesFill[1], parcoursCirclesFill[2] + Math.random() * 10, parcoursCirclesFill[3]);
-    ellipse(locs[i].x, locs[i].y, 10 + Math.random() * 10 + locs[i].size);
-    textSize(sizeT(0) + Math.random() / 2);
-    textAlign(CENTER);
-    // Draw frequented cities
-    if (cityArray[d].length > 4) {
-      fill(cityHabitFill);
-      let r = constrain(cityArray[d].length * 8, 0, 300) + random(-10, 10) * cityArray[d].length / 1.3;
-      if (cityArray[d].length > 30) {
-        fill(cityHabitFill[0], cityHabitFill[1], cityHabitFill[2], cityHabitFill[3] / 5);
-        r = constrain(cityArray[d].length * 8, 0, 300) + random(-10, 10) * cityArray[d].length / 4;
-      }
-      ellipse(cityArray[d][0].x, cityArray[d][0].y, r);
-      // invert
-      nuit ? fill(cityHabitText[0] + cityArray[d].length * 1, cityHabitText[1] + cityArray[d].length * 5, cityHabitText[2], cityHabitText[3]) : fill(cityHabitText[0] + cityArray[d].length * 1, cityHabitText[1] + cityArray[d].length * 5, cityHabitText[2], cityHabitText[3]);
-      textSize(constrain(cityArray[d].length * 1.8, 10, 45));
-      cityArray[d][0].y > height / 2 ? text(locs[i].city + " ", cityArray[d][0].x, cityArray[d][0].y - cityArray[d].length) : text(locs[i].city + " ", cityArray[d][0].x, cityArray[d][0].y + cityArray[d].length * 4 + Math.random() * 2);
-    }
-    pop();
-    push();
-    nuit ? stroke(innerCercleS[0], innerCercleS[1] - Math.random() * 155, innerCercleS[2], innerCercleS[3]) : stroke(innerCercleS[0], innerCercleS[1] + Math.random() * 155, innerCercleS[2], innerCercleS[3]);
-    ellipse(locs[i].x, locs[i].y, 10 + Math.random() * 5);
-    pop();
-  }
-  endShape();
-  push();
-  // on Circle text
-  fill(cityTextFill);
-  textAlign(CENTER);
-  ellipse(locs[locs.length - 1].x, locs[locs.length - 1].y, 50 - Math.random() * 25);
-  fill(parcoursFill);
-  noStroke();
-  textSize(sizeT(0) * 1.2);
-  text(locs[locs.length - 1].place, locs[locs.length - 1].x, locs[locs.length - 1].y + sizeT(-1) * 1.5);
   pop();
-  // push();
-  // fill(255,0,0);
-  // ellipse(predict[locs.length-1].x,predict[locs.length-1].y,75-random(25));
-  // pop();
+  // Left City List
+  if (m.length > 10) {
+    for (let i = 0; i < m.length; i++) {
+      if (!m[i][0] || i > 4) {
+        continue
+      }
+      // console.log(m[i][0].city)
+      if (locs[locs.length - 1].city == m[i][0].city) {
+        fill(cityHighlight);
+        stroke(cityHighlight);
+      } else {
+        fill(city);
+        stroke(city);
 
-  // bar de navigation
-  if (height > width) {
-    push();
-    stroke(0, 0);
-    fill(navBar);
-    rect(width - 15, mouseY, 15, height - mouseY);
-    pop();
-  } else {
-    push();
-    stroke(0, 0);
-    fill(navBar);
-    rect(0, height - 15, mouseX, 15);
-    pop();
+      }
+      textSize(sizeT(0) * 1.2);
+      if (height > width) {
+        // textSize(sizeT(0));
+      }
+      text(m[i][0].city + ": " + m[i].length + " ", 15, 60 + i * sizeT(-2));
+    }
   }
-  // mouseX>50?stage=1:stage=0;
-  // console.log(stage);
-  stageControl();
+  //  left place list
+  // if (n.length > 10) {
+  //   for (let i = 0; i < n.length; i++) {
+  //     if (!n[i][0] || i > 2) {
+  //       continue
+  //     }
+  //     if (locs[locs.length - 1].place == n[i][0].place) {
+  //       fill(cityHighlight);
+  //       stroke(cityHighlight);
+  //     } else {
+  //       fill(city);
+  //       stroke(city);
+  //     }
+  //     text(n[i][0].place + " " + n[i].length + " ", 15, height * 0.85 - sizeT(-1) * 5 + i * sizeT(-2));
+  //   }
+  // }
+}
+// LINES, CIRCLES
+beginShape();
+fill(0, 0);
+strokeWeight(2.5 - Math.random() * 2);
+// color stroke
+// dynamic
+nuit ? stroke(parcoursStroke[0], parcoursStroke[1] + Math.random() * 200, parcoursStroke[2], parcoursStroke[3]) : stroke(parcoursStroke[0], parcoursStroke[1] - Math.random() * 200, parcoursStroke[2], parcoursStroke[3]);
+let x = 0;
+let y = 0;
+for (let i = 0; i < locs.length; i++) {
+  vertex(locs[i].x, locs[i].y);
+  // get No. of this city
+  let d = cityA.indexOf(locs[i].city);
+  // draw parcours points
+  push();
+  noStroke();
+  // color blue parcours circles 
+  nuit ? fill(parcoursCirclesFill[0], parcoursCirclesFill[1], parcoursCirclesFill[2] - Math.random() * 10, parcoursCirclesFill[3]) : fill(parcoursCirclesFill[0], parcoursCirclesFill[1], parcoursCirclesFill[2] + Math.random() * 10, parcoursCirclesFill[3]);
+  ellipse(locs[i].x, locs[i].y, 10 + Math.random() * 10 + locs[i].size);
+  textSize(sizeT(0) + Math.random() / 2);
+  textAlign(CENTER);
+  // Draw frequented cities
+  if (cityArray[d].length > 4) {
+    fill(cityHabitFill);
+    let r = constrain(cityArray[d].length * 8, 0, 300) + random(-10, 10) * cityArray[d].length / 1.3;
+    if (cityArray[d].length > 30) {
+      fill(cityHabitFill[0], cityHabitFill[1], cityHabitFill[2], cityHabitFill[3] / 5);
+      r = constrain(cityArray[d].length * 8, 0, 300) + random(-10, 10) * cityArray[d].length / 4;
+    }
+    ellipse(cityArray[d][0].x, cityArray[d][0].y, r);
+    // invert
+    nuit ? fill(cityHabitText[0] + cityArray[d].length * 1, cityHabitText[1] + cityArray[d].length * 5, cityHabitText[2], cityHabitText[3]) : fill(cityHabitText[0] + cityArray[d].length * 1, cityHabitText[1] + cityArray[d].length * 5, cityHabitText[2], cityHabitText[3]);
+    textSize(constrain(cityArray[d].length * 1.8, 10, 45));
+    cityArray[d][0].y > height / 2 ? text(locs[i].city + " ", cityArray[d][0].x, cityArray[d][0].y - cityArray[d].length) : text(locs[i].city + " ", cityArray[d][0].x, cityArray[d][0].y + cityArray[d].length * 4 + Math.random() * 2);
+  }
+  pop();
+  push();
+  nuit ? stroke(innerCercleS[0], innerCercleS[1] - Math.random() * 155, innerCercleS[2], innerCercleS[3]) : stroke(innerCercleS[0], innerCercleS[1] + Math.random() * 155, innerCercleS[2], innerCercleS[3]);
+  ellipse(locs[i].x, locs[i].y, 10 + Math.random() * 5);
+  pop();
+}
+endShape();
+push();
+// on Circle text
+fill(cityTextFill);
+textAlign(CENTER);
+ellipse(locs[locs.length - 1].x, locs[locs.length - 1].y, 50 - Math.random() * 25);
+fill(parcoursFill);
+noStroke();
+textSize(sizeT(0) * 1.2);
+text(locs[locs.length - 1].place, locs[locs.length - 1].x, locs[locs.length - 1].y + sizeT(-1) * 1.5);
+pop();
+// push();
+// fill(255,0,0);
+// ellipse(predict[locs.length-1].x,predict[locs.length-1].y,75-random(25));
+// pop();
+
+// bar de navigation
+bar(locs, locss);
+// mouseX>50?stage=1:stage=0;
+// console.log(stage);
+stageControl();
 
 
 }
@@ -387,6 +368,27 @@ const Choose = (array) => {
     ee = e;
   }
   return array.slice(0, e);
+}
+
+const bar = (a1, a2) => {
+  let long = constrain(a1.length / a2.length, 0.02, 0.995);
+  if (height > width) {
+    push();
+    stroke(0, 0);
+    fill(navBar);
+    rect(width - 15, height - long * height, 15, long * height);
+    fill(rightTextRed)
+    rect(width - 25, (1 - long) * height - 5, 40, 5);
+    pop();
+  } else {
+    push();
+    stroke(0, 0);
+    fill(navBar);
+    rect(0, height - 20, long * width, 15);
+    fill(rightTextRed)
+    rect(long * width, height - 25, 5, 40);
+    pop();
+  }
 }
 document.touchmove = function (n) {
   n.preventDefault();

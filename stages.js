@@ -3,6 +3,7 @@ let stageControl = () => {
     stage = "indicate";
   }
   stage = (cityToggle() ? "city" : 0);
+
   switch (stage) {
     case -1:
       {
@@ -51,6 +52,7 @@ let stageControl = () => {
     case "city":
       {
         push();
+        noStroke();
         fill(rectF);
         rect(0, 0, width, height);
         for (let i = 0; i < m.length; i++) {
@@ -70,10 +72,12 @@ let stageControl = () => {
         pop();
 
         push();
+        noStroke();
+
         fill(rightTextRed);
         textSize(sizeT(1) * 1.3);
-        textAlign(CENTER);
-        text("Tablau Villes Visitées", width / 2, height * 0.82);
+        // textAlign(CENTER);
+        text("Tablau Villes Visitées", 200, 50);
         pop();
         break;
 
@@ -83,4 +87,12 @@ let stageControl = () => {
 
 function cityToggle() {
   return state == 1 && (mouseX < 150 && mouseY < 150) ? true : false;
+}
+
+function barLimit() {
+  if (width > height) {
+    return (mouseY > height - 100);
+  } else {
+    return (mouseX > width - 100);
+  }
 }
