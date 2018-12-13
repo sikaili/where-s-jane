@@ -175,7 +175,7 @@ function sizeT(n) {
 
 function draw() {
   // splice array, create cityArray&placeArray
-  locs = (abs(mouseX - pmouseX) > 0 || abs(mouseY - pmouseY) > 0) && stage === 0 ? Choose(locss) : locs;
+  locs = (abs(mouseX - pmouseX) > 0 || abs(mouseY - pmouseY) > 0) && (stage === 0) ? Choose(locss) : locs;
   if (abs(mouseX - pmouseX) > 0 || abs(mouseY - pmouseY) > 0) {
     // 2nd arrays with frequency
     for (let i = 0; i < cityA.length; i++) {
@@ -275,9 +275,9 @@ function draw() {
         }
         textSize(sizeT(0) * 1.2);
         if (height > width) {
-          textSize(10);
+          // textSize(sizeT(0));
         }
-        text(m[i][0].city + ": " + m[i].length + " ", 15, 45 + i * sizeT(-2));
+        text(m[i][0].city + ": " + m[i].length + " ", 15, 60 + i * sizeT(-2));
       }
     }
     //  left place list
@@ -376,6 +376,7 @@ function draw() {
 }
 
 const Choose = (array) => {
+
   let e = Math.floor(constrain(map(mouseX, 0, width, 0, array.length), 0, array.length)) + 1;
   if (height > width) {
     e = Math.floor(constrain(map(height - mouseY, 0, height, 0, array.length), 0, array.length)) + 1;

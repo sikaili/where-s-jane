@@ -65,7 +65,7 @@ let stageControl = () => {
             // stroke(city);
           }
           textSize(sizeT(1) * 1.2);
-          text(m[i][0].city + ": " + m[i].length + " fois", width / 2 - 100, 150 + i * sizeT(1) * 1.5);
+          text(m[i][0].city + ": " + m[i].length + " fois", 200, 150 + i * sizeT(1) * 1.5);
         }
         pop();
 
