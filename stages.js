@@ -1,11 +1,8 @@
 let stageControl = () => {
-  if (stage === -1 && state != -1) {
-    stage = "indicate";
-  }
-  stage = (cityToggle() ? "city" : 0);
+  stage === -1 ? "" : stage = (cityToggle() ? "city" : 0);
 
   switch (stage) {
-    case -1:
+    case "intro":
       {
         push();
         fill(rectF);

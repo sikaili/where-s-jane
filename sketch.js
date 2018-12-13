@@ -175,6 +175,7 @@ function sizeT(n) {
 
 function draw() {
   // splice array, create cityArray&placeArray
+  barLimit() ? stage = 0 : "";
   locs = (abs(mouseX - pmouseX) > 0 || abs(mouseY - pmouseY) > 0) && (stage === 0) && barLimit() ? Choose(locss) : locs;
   if ((abs(mouseX - pmouseX) > 0 || abs(mouseY - pmouseY) > 0) && (stage === 0) && barLimit()) {
     // 2nd arrays with frequency
@@ -203,49 +204,31 @@ function draw() {
     textAlign(RIGHT);
     textSize(sizeT(1) * 1.5);
     fill(rightTextBlue);
-    text("Data of Jane Joe", left, top + Math.random());
+    text("Jane Joe's Location", left, top);
     textSize(sizeT(0) * 1.5);
     fill(rightTextRed);
-    text("From 03/07/18 to 23/07/18", left, top + sizeT(-1) + Math.random());
+    // text("From 03/07/18 to 23/07/18", left, top + sizeT(-1));
+    text("From 03/07/18 to 23/07/18", left, top + sizeT(-1));
+    pop();
+
   }
-
-  // date time Left
-  textAlign(LEFT);
-  fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], 255 - Math.random() * 100);
-  textSize(sizeT(1) * 1.4)
-  text(locs[locs.length - 1].date + "\n" + locs[locs.length - 1].time, 15, height * 0.82);
-  textSize(sizeT(0));
-  // text("Total facebook connections:" + locs[locs.length - 1].n, 15, height * 0.82 + sizeT(-1) * 2.3 + Math.random() * 2);
-
-  // provocative sentences
-  if (mouseX > width * 0.4) {
-    fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], Math.random() * 1000);
-    // text("Each time you connect,\nFacebook knows where you are", 15, height * 0.82 + sizeT(-1) * 3 + Math.random() * 2);
-  }
-  pop();
-  // Left City List
-  if (m.length > 10) {
-    for (let i = 0; i < m.length; i++) {
-      if (!m[i][0] || i > 4) {
-        continue
-      }
-      // console.log(m[i][0].city)
-      if (locs[locs.length - 1].city == m[i][0].city) {
-        fill(cityHighlight);
-        stroke(cityHighlight);
-      } else {
-        fill(city);
-        stroke(city);
-
-      }
-      textSize(sizeT(0) * 1.2);
-      if (height > width) {
-        // textSize(sizeT(0));
-      }
-      text(m[i][0].city + ": " + m[i].length + " ", 15, 60 + i * sizeT(-2));
+  // Time & Left Citys
+  let t = () => {
+    push();
+    textSize(sizeT(1));
+    noStroke();
+    fill(navBar[0], navBar[1], navBar[2], (Math.sin(frameCount / 20) + 0.5) * 80);
+    // textAlign(CENTER)
+    if (width > height) {
+      text(">>> Drag from here to begin >>>", 60, height - 20);
+    } else {
+      translate(width, height);
+      rotate(-PI / 2);
+      text(">>> Drag from here to begin", 60, -20);
     }
+    pop();
   }
-
+  stage != -1 ? texts() : t();
   // LINES, CIRCLES
   beginShape();
   fill(0, 0);
@@ -278,7 +261,7 @@ function draw() {
       ellipse(cityArray[d][0].x, cityArray[d][0].y, r);
       // invert
       nuit ? fill(cityHabitText[0] + cityArray[d].length * 1, cityHabitText[1] + cityArray[d].length * 5, cityHabitText[2], cityHabitText[3]) : fill(cityHabitText[0] + cityArray[d].length * 1, cityHabitText[1] + cityArray[d].length * 5, cityHabitText[2], cityHabitText[3]);
-      textSize(constrain(cityArray[d].length * 1.8, 10, 45));
+      textSize(locs.length > 1 ? constrain(cityArray[d].length * 1.8, 10, 45) : 0);
       cityArray[d][0].y > height / 2 ? text(locs[i].city + " ", cityArray[d][0].x, cityArray[d][0].y - cityArray[d].length) : text(locs[i].city + " ", cityArray[d][0].x, cityArray[d][0].y + cityArray[d].length * 4 + Math.random() * 2);
     }
     pop();
@@ -293,7 +276,7 @@ function draw() {
   fill(cityTextFill);
   textAlign(CENTER);
   ellipse(locs[locs.length - 1].x, locs[locs.length - 1].y, 50 - Math.random() * 25);
-  fill(parcoursFill);
+  fill(locs.length > 1 ? parcoursFill : (0, 0));
   noStroke();
   textSize(sizeT(0) * 1.2);
   text(locs[locs.length - 1].place, locs[locs.length - 1].x, locs[locs.length - 1].y + sizeT(-1) * 1.5);
