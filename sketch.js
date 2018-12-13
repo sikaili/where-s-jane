@@ -239,7 +239,7 @@ function draw() {
 
   // date time Left
   textAlign(LEFT);
-  fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], Math.random() * 1000);
+  fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], 255 - Math.random() * 100);
   textSize(sizeT(1) * 1.4)
   text(locs[locs.length - 1].date + "\n" + locs[locs.length - 1].time, 15, height * 0.82);
   textSize(sizeT(0));
@@ -377,16 +377,16 @@ const bar = (a1, a2) => {
     stroke(0, 0);
     fill(navBar);
     rect(width - 15, height - long * height, 15, long * height);
-    fill(rightTextRed)
-    rect(width - 25, (1 - long) * height - 5, 40, 5);
+    fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], 150 - Math.random() * 50);
+    rect(width - 25, (1 - long) * height - 10, 40, 10);
     pop();
   } else {
     push();
     stroke(0, 0);
     fill(navBar);
     rect(0, height - 20, long * width, 15);
-    fill(rightTextRed)
-    rect(long * width, height - 25, 5, 40);
+    fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], 150 - Math.random() * 50);
+    rect(long * width, height - 25, 10, 40);
     pop();
   }
 }
