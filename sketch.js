@@ -289,69 +289,69 @@ function draw() {
   //     text(n[i][0].place + " " + n[i].length + " ", 15, height * 0.85 - sizeT(-1) * 5 + i * sizeT(-2));
   //   }
   // }
-}
-// LINES, CIRCLES
-beginShape();
-fill(0, 0);
-strokeWeight(2.5 - Math.random() * 2);
-// color stroke
-// dynamic
-nuit ? stroke(parcoursStroke[0], parcoursStroke[1] + Math.random() * 200, parcoursStroke[2], parcoursStroke[3]) : stroke(parcoursStroke[0], parcoursStroke[1] - Math.random() * 200, parcoursStroke[2], parcoursStroke[3]);
-let x = 0;
-let y = 0;
-for (let i = 0; i < locs.length; i++) {
-  vertex(locs[i].x, locs[i].y);
-  // get No. of this city
-  let d = cityA.indexOf(locs[i].city);
-  // draw parcours points
-  push();
-  noStroke();
-  // color blue parcours circles 
-  nuit ? fill(parcoursCirclesFill[0], parcoursCirclesFill[1], parcoursCirclesFill[2] - Math.random() * 10, parcoursCirclesFill[3]) : fill(parcoursCirclesFill[0], parcoursCirclesFill[1], parcoursCirclesFill[2] + Math.random() * 10, parcoursCirclesFill[3]);
-  ellipse(locs[i].x, locs[i].y, 10 + Math.random() * 10 + locs[i].size);
-  textSize(sizeT(0) + Math.random() / 2);
-  textAlign(CENTER);
-  // Draw frequented cities
-  if (cityArray[d].length > 4) {
-    fill(cityHabitFill);
-    let r = constrain(cityArray[d].length * 8, 0, 300) + random(-10, 10) * cityArray[d].length / 1.3;
-    if (cityArray[d].length > 30) {
-      fill(cityHabitFill[0], cityHabitFill[1], cityHabitFill[2], cityHabitFill[3] / 5);
-      r = constrain(cityArray[d].length * 8, 0, 300) + random(-10, 10) * cityArray[d].length / 4;
-    }
-    ellipse(cityArray[d][0].x, cityArray[d][0].y, r);
-    // invert
-    nuit ? fill(cityHabitText[0] + cityArray[d].length * 1, cityHabitText[1] + cityArray[d].length * 5, cityHabitText[2], cityHabitText[3]) : fill(cityHabitText[0] + cityArray[d].length * 1, cityHabitText[1] + cityArray[d].length * 5, cityHabitText[2], cityHabitText[3]);
-    textSize(constrain(cityArray[d].length * 1.8, 10, 45));
-    cityArray[d][0].y > height / 2 ? text(locs[i].city + " ", cityArray[d][0].x, cityArray[d][0].y - cityArray[d].length) : text(locs[i].city + " ", cityArray[d][0].x, cityArray[d][0].y + cityArray[d].length * 4 + Math.random() * 2);
-  }
-  pop();
-  push();
-  nuit ? stroke(innerCercleS[0], innerCercleS[1] - Math.random() * 155, innerCercleS[2], innerCercleS[3]) : stroke(innerCercleS[0], innerCercleS[1] + Math.random() * 155, innerCercleS[2], innerCercleS[3]);
-  ellipse(locs[i].x, locs[i].y, 10 + Math.random() * 5);
-  pop();
-}
-endShape();
-push();
-// on Circle text
-fill(cityTextFill);
-textAlign(CENTER);
-ellipse(locs[locs.length - 1].x, locs[locs.length - 1].y, 50 - Math.random() * 25);
-fill(parcoursFill);
-noStroke();
-textSize(sizeT(0) * 1.2);
-text(locs[locs.length - 1].place, locs[locs.length - 1].x, locs[locs.length - 1].y + sizeT(-1) * 1.5);
-pop();
-// push();
-// fill(255,0,0);
-// ellipse(predict[locs.length-1].x,predict[locs.length-1].y,75-random(25));
-// pop();
 
-// bar de navigation
-bar(locs, locss);
-// mouseX>50?stage=1:stage=0;
-// console.log(stage);
-stageControl();
+  // LINES, CIRCLES
+  beginShape();
+  fill(0, 0);
+  strokeWeight(2.5 - Math.random() * 2);
+  // color stroke
+  // dynamic
+  nuit ? stroke(parcoursStroke[0], parcoursStroke[1] + Math.random() * 200, parcoursStroke[2], parcoursStroke[3]) : stroke(parcoursStroke[0], parcoursStroke[1] - Math.random() * 200, parcoursStroke[2], parcoursStroke[3]);
+  let x = 0;
+  let y = 0;
+  for (let i = 0; i < locs.length; i++) {
+    vertex(locs[i].x, locs[i].y);
+    // get No. of this city
+    let d = cityA.indexOf(locs[i].city);
+    // draw parcours points
+    push();
+    noStroke();
+    // color blue parcours circles 
+    nuit ? fill(parcoursCirclesFill[0], parcoursCirclesFill[1], parcoursCirclesFill[2] - Math.random() * 10, parcoursCirclesFill[3]) : fill(parcoursCirclesFill[0], parcoursCirclesFill[1], parcoursCirclesFill[2] + Math.random() * 10, parcoursCirclesFill[3]);
+    ellipse(locs[i].x, locs[i].y, 10 + Math.random() * 10 + locs[i].size);
+    textSize(sizeT(0) + Math.random() / 2);
+    textAlign(CENTER);
+    // Draw frequented cities
+    if (cityArray[d].length > 4) {
+      fill(cityHabitFill);
+      let r = constrain(cityArray[d].length * 8, 0, 300) + random(-10, 10) * cityArray[d].length / 1.3;
+      if (cityArray[d].length > 30) {
+        fill(cityHabitFill[0], cityHabitFill[1], cityHabitFill[2], cityHabitFill[3] / 5);
+        r = constrain(cityArray[d].length * 8, 0, 300) + random(-10, 10) * cityArray[d].length / 4;
+      }
+      ellipse(cityArray[d][0].x, cityArray[d][0].y, r);
+      // invert
+      nuit ? fill(cityHabitText[0] + cityArray[d].length * 1, cityHabitText[1] + cityArray[d].length * 5, cityHabitText[2], cityHabitText[3]) : fill(cityHabitText[0] + cityArray[d].length * 1, cityHabitText[1] + cityArray[d].length * 5, cityHabitText[2], cityHabitText[3]);
+      textSize(constrain(cityArray[d].length * 1.8, 10, 45));
+      cityArray[d][0].y > height / 2 ? text(locs[i].city + " ", cityArray[d][0].x, cityArray[d][0].y - cityArray[d].length) : text(locs[i].city + " ", cityArray[d][0].x, cityArray[d][0].y + cityArray[d].length * 4 + Math.random() * 2);
+    }
+    pop();
+    push();
+    nuit ? stroke(innerCercleS[0], innerCercleS[1] - Math.random() * 155, innerCercleS[2], innerCercleS[3]) : stroke(innerCercleS[0], innerCercleS[1] + Math.random() * 155, innerCercleS[2], innerCercleS[3]);
+    ellipse(locs[i].x, locs[i].y, 10 + Math.random() * 5);
+    pop();
+  }
+  endShape();
+  push();
+  // on Circle text
+  fill(cityTextFill);
+  textAlign(CENTER);
+  ellipse(locs[locs.length - 1].x, locs[locs.length - 1].y, 50 - Math.random() * 25);
+  fill(parcoursFill);
+  noStroke();
+  textSize(sizeT(0) * 1.2);
+  text(locs[locs.length - 1].place, locs[locs.length - 1].x, locs[locs.length - 1].y + sizeT(-1) * 1.5);
+  pop();
+  // push();
+  // fill(255,0,0);
+  // ellipse(predict[locs.length-1].x,predict[locs.length-1].y,75-random(25));
+  // pop();
+
+  // bar de navigation
+  bar(locs, locss);
+  // mouseX>50?stage=1:stage=0;
+  // console.log(stage);
+  stageControl();
 
 
 }
