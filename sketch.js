@@ -217,7 +217,7 @@ function draw() {
     push();
     textSize(sizeT(1));
     noStroke();
-    fill(navBar[0], navBar[1], navBar[2], (Math.sin(frameCount / 20) + 0.5) * 80);
+    fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], (Math.sin(frameCount / 20) + 0.5) * 80);
     // textAlign(CENTER)
     if (width > height) {
       text(">>> Drag from here to begin >>>", 60, height - 20);
@@ -296,7 +296,6 @@ function draw() {
 }
 
 const Choose = (array) => {
-
   let e = Math.floor(constrain(map(mouseX, 0, width, 0, array.length), 0, array.length)) + 1;
   if (height > width) {
     e = Math.floor(constrain(map(height - mouseY, 0, height, 0, array.length), 0, array.length)) + 1;
@@ -305,6 +304,9 @@ const Choose = (array) => {
     sound.rate(1 + Math.random() / 100);
     sound.play();
     ee = e;
+  }
+  if (e < 2) {
+    stage = -1;
   }
   return array.slice(0, e);
 }
