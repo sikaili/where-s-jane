@@ -273,9 +273,9 @@ function draw() {
   endShape();
   push();
   // on Circle text
-  fill(cityTextFill);
+  fill(locs.length > 1 ? [...parcoursStroke].slice(0, 3).concat(195) : [0, 0]);
   textAlign(CENTER);
-  ellipse(locs[locs.length - 1].x, locs[locs.length - 1].y, 50 - Math.random() * 25);
+  ellipse(locs[locs.length - 1].x, locs[locs.length - 1].y, 70 - Math.random() * 25);
   fill(locs.length > 1 ? parcoursFill : (0, 0));
   noStroke();
   textSize(sizeT(0) * 1.2);

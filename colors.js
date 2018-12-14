@@ -22,7 +22,7 @@ function scolor(nuit) {
       rightTextBlue = inverColor([0, 0, 150, 80]);
       rightTextRed = inverColor([150, 0, 0, 100]);
       cityHighlight = rightTextRed;
-      city = inverColor([0, 0, 180, 20]);
+      city = inverColor([0, 0, 180, 50]);
       rectF = [0, 240];
       // dynamic
 

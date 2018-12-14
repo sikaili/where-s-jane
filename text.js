@@ -4,7 +4,7 @@ function texts() {
   textAlign(LEFT);
   fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], 255 - Math.random() * 100);
   textSize(sizeT(1) * 1.4)
-  text(locs[locs.length - 1].date + "\n" + locs[locs.length - 1].time, 15, height * 0.82);
+  text(locs[locs.length - 1].date + "\n" + locs[locs.length - 1].time, 15, height * 0.89 - 20);
   textSize(sizeT(0));
   // text("Total facebook connections:" + locs[locs.length - 1].n, 15, height * 0.82 + sizeT(-1) * 2.3 + Math.random() * 2);
 
