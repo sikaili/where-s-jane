@@ -205,7 +205,7 @@ function draw() {
     textAlign(RIGHT);
     textSize(sizeT(1) * 1.5);
     fill(rightTextBlue);
-    text("Jane Joe's Location", left, top);
+    text("Where's Jane Joe", left, top);
     textSize(sizeT(0) * 1.5);
     fill(rightTextRed);
     // text("From 03/07/18 to 23/07/18", left, top + sizeT(-1));
