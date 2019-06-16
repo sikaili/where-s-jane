@@ -67,7 +67,7 @@ function preload() {
 }
 
 function setup() {
-  pixelDensity(1.0);
+  pixelDensity() > 2.0 ? pixelDensity(2.0) : "";
   masterVolume(0.2)
   textFont(font);
   // noCursor();

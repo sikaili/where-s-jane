@@ -1,4 +1,5 @@
 function touchStarted() {
+  getAudioContext().state == "running" ? '' : getAudioContext().resume();
   state = 1;
 }
 
