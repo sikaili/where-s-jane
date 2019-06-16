@@ -221,11 +221,11 @@ function draw() {
     fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], (Math.sin(frameCount / 20) + 0.5) * 80);
     // textAlign(CENTER)
     if (width > height) {
-      text(">>> Drag from here to begin >>>", 60, height - 20);
+      text(">>> Drag here to begin >>>", 60, height - 20);
     } else {
       translate(width, height);
       rotate(-PI / 2);
-      text(">>> Drag from here to begin", 60, -20);
+      text(">>> Drag here to begin", 60, -20);
     }
     pop();
   }
