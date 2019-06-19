@@ -208,7 +208,6 @@ function draw() {
     text("Where's Jane Joe", left, top);
     textSize(sizeT(0) * 1.5);
     fill(rightTextRed);
-    // text("From 03/07/18 to 23/07/18", left, top + sizeT(-1));
     text("From 03/07/18 to 23/07/18", left, top + sizeT(-1));
     pop();
 
@@ -282,15 +281,8 @@ function draw() {
   textSize(sizeT(0) * 1.2);
   text(locs[locs.length - 1].place, locs[locs.length - 1].x, locs[locs.length - 1].y + sizeT(-1) * 1.5);
   pop();
-  // push();
-  // fill(255,0,0);
-  // ellipse(predict[locs.length-1].x,predict[locs.length-1].y,75-random(25));
-  // pop();
-
   // bar de navigation
   bar(locs, locss);
-  // mouseX>50?stage=1:stage=0;
-  // console.log(stage);
   stageControl();
 
 
