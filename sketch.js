@@ -9,7 +9,7 @@ document.addEventListener('dblclick', () => {
 }, {
   passive: false
 });
-var tapedTwice = false;
+let tapedTwice = false;
 
 function Dclick(event) {
   if (!tapedTwice) {
