@@ -41,7 +41,7 @@ let [m, n] = [
   []
 ];
 let stage = -1;
-backgroundColor = [255, 255, 255, 60];
+backgroundColor = [255, 255, 255, 100];
 cityHabitText = [255, 255, 20, 50];
 // text habit city
 cityTextFill = [255, 255, 0, 100];
@@ -209,7 +209,7 @@ function draw() {
     text("Where's Jane Joe", left, top);
     textSize(sizeT(0) * 1.5);
     fill(rightTextRed);
-    text("From 03/07/18 to 23/07/18", left, top + sizeT(-1));
+    text("From 03/07/19 to 23/07/19", left, top + sizeT(-1));
     pop();
 
   }
@@ -219,6 +219,7 @@ function draw() {
     textSize(sizeT(1));
     noStroke();
     fill(rightTextRed[0], rightTextRed[1], rightTextRed[2], (Math.sin(frameCount / 20) + 0.5) * 80);
+    fill(100);
     // textAlign(CENTER)
     if (width > height) {
       text(">>> Drag here to begin >>>", 60, height - 20);
@@ -229,11 +230,9 @@ function draw() {
     }
     pop();
   }
-  stage != -1 ? texts() : t();
   // LINES, CIRCLES
   beginShape();
   fill(0, 0);
-  strokeWeight(2.5 - Math.random() * 2);
   // color stroke
   // dynamic
   nuit ? stroke(parcoursStroke[0], parcoursStroke[1] + Math.random() * 200, parcoursStroke[2], parcoursStroke[3]) : stroke(parcoursStroke[0], parcoursStroke[1] - Math.random() * 200, parcoursStroke[2], parcoursStroke[3]);
@@ -285,6 +284,8 @@ function draw() {
   // bar de navigation
   bar(locs, locss);
   stageControl();
+  stage != -1 ? texts() : t();
+
 
 
 }
