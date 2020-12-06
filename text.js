@@ -34,7 +34,7 @@ function texts() {
       if (height > width) {
         // textSize(sizeT(0));
       }
-      text(m[i][0].city + ": " + m[i].length + " ", 15, height*0.6 + 70 + i * sizeT(-2));
+      text(m[i][0].city + ": " + m[i].length + " ", 15, height*0.89 - 200 + i * sizeT(-2));
     }
   }
   pop();
